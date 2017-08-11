@@ -5,7 +5,7 @@
 // $Id: pages2csv.inc.php,v 1.5 2006/07/21 21:31:27 jjyun Exp $
 // 
 /////////////////////////////////////////////////
-// ´ÉÍı¼Ô¤À¤±¤¬ÅºÉÕ¥Õ¥¡¥¤¥ë¤ò¥¢¥Ã¥×¥í¡¼¥É¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+// ç®¡ç†è€…ã ã‘ãŒæ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 define('PLUGIN_PAGES2CSV_UPLOAD_ADMIN_ONLY',FALSE); // FALSE or TRUE
 /////////////////////////////////////////////////
 
@@ -21,11 +21,11 @@ function plugin_pages2csv_init()
   
     $messages = array(
         '_pages2csv_messages' => array(
-            'btn_submit' => '¼Â¹Ô',
-            'title_text' => 'CSV¥Õ¥¡¥¤¥ëÀ¸À®¡§',
-            'err_create_tmpfile' => '°ì»ş¥Õ¥¡¥¤¥ë¤ÎºîÀ®¤Ë¼ºÇÔ¡§',
-            'err_write_tmpfile' => '°ì»ş¥Õ¥¡¥¤¥ë¤Ø¤Î½ñ¤­¹ş¤ß¤Ë¼ºÇÔ¡§',
-            'err_rename_tmpfile' => 'ÅºÉÕ¥Õ¥¡¥¤¥ë¤Ø¤ÎÌ¾¾ÎÊÑ¹¹¤Ë¼ºÇÔ¡§',
+            'btn_submit' => 'å®Ÿè¡Œ',
+            'title_text' => 'CSVãƒ•ã‚¡ã‚¤ãƒ«ç”Ÿæˆï¼š',
+            'err_create_tmpfile' => 'ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆã«å¤±æ•—ï¼š',
+            'err_write_tmpfile' => 'ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ï¼š',
+            'err_rename_tmpfile' => 'æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®åç§°å¤‰æ›´ã«å¤±æ•—ï¼š',
             ),
         );
     set_plugin_messages($messages);
@@ -50,7 +50,7 @@ function plugin_pages2csv_convert()
     if (!array_key_exists($page,$numbers)) $numbers[$page] = 0;
     $pages2csv_no = $numbers[$page]++;
     
-    // °ú¿ô¤Î³ÎÇ§¡¦¼èÆÀ
+    // å¼•æ•°ã®ç¢ºèªãƒ»å–å¾—
     if (func_num_args())
     {
         $args = func_get_args();
@@ -102,8 +102,8 @@ function plugin_pages2csv_convert()
     $s_script = htmlspecialchars($script);
     
     $pass = '';
-    // attach.inc.php ¤Ç ¥¢¥Ã¥×¥í¡¼¥É/ºï½ü»ş¤Ë¥Ñ¥¹¥ï¡¼¥É¤òÍ×µá¤¹¤ëÀßÄê¤Ç¤¢¤Ã¤¿¾ì¹ç¤«
-    // ¤â¤·¤¯¤Ï¡¢CSV¥Õ¥¡¥¤¥ë¤ÎºîÀ®¤ò´ÉÍı¼Ô¤À¤±¤¬¹Ô¤¨¤ë¤è¤¦¤Ë¤·¤¿¾ì¹ç
+    // attach.inc.php ã§ ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰/å‰Šé™¤æ™‚ã«ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’è¦æ±‚ã™ã‚‹è¨­å®šã§ã‚ã£ãŸå ´åˆã‹
+    // ã‚‚ã—ãã¯ã€CSVãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆã‚’ç®¡ç†è€…ã ã‘ãŒè¡Œãˆã‚‹ã‚ˆã†ã«ã—ãŸå ´åˆ
     
     if ( PLUGIN_ATTACH_PASSWORD_REQUIRE or PLUGIN_PAGES2CSV_UPLOAD_ADMIN_ONLY)
     {
@@ -144,16 +144,16 @@ function plugin_pages2csv_action()
     global $vars;
     global $_attach_messages;
     
-    // ÍøÍÑ¤¹¤ë¥×¥é¥°¥¤¥ó¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+    // åˆ©ç”¨ã™ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
     if ( !function_exists('pkwk_login') )
     {
         return array('result'=>FALSE,'msg'=>"pkwk_login function is not found (in func.php).");
     }
 
-    // $vars['refer'] : Åö³º¤Îplugin ¤òÀßÃÖ¤·¤¿¥Ú¡¼¥¸
-    // $vars['s_page']  : ¥ê¥¹¥ÈÉ½¼¨¤¹¤ëtracker¤Î¥Ú¡¼¥¸¤Î³ÊÇ¼¾ì½ê
-    // ¥Ú¡¼¥¸Ì¾¤¬ NULL ¤Ç¤¢¤ë¾ì¹ç¤ÏÂ¸ºß¤·¤Ê¤¤¤ÈÁÛÄê
-    // ¤Ş¤¿ $pass ¤Ï ¤¢¤¯¤Ş¤Ç¥æ¡¼¥¶Â¦¤«¤é¤Î¥Ñ¥¹¥ï¡¼¥É¥Õ¥ì¡¼¥º¤òÉ½¤¹¤³¤È¤È¤¹¤ë¡£
+    // $vars['refer'] : å½“è©²ã®plugin ã‚’è¨­ç½®ã—ãŸãƒšãƒ¼ã‚¸
+    // $vars['s_page']  : ãƒªã‚¹ãƒˆè¡¨ç¤ºã™ã‚‹trackerã®ãƒšãƒ¼ã‚¸ã®æ ¼ç´å ´æ‰€
+    // ãƒšãƒ¼ã‚¸åãŒ NULL ã§ã‚ã‚‹å ´åˆã¯å­˜åœ¨ã—ãªã„ã¨æƒ³å®š
+    // ã¾ãŸ $pass ã¯ ã‚ãã¾ã§ãƒ¦ãƒ¼ã‚¶å´ã‹ã‚‰ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒ•ãƒ¬ãƒ¼ã‚ºã‚’è¡¨ã™ã“ã¨ã¨ã™ã‚‹ã€‚
     $s_page = array_key_exists('s_page',$vars) ? htmlspecialchars($vars['s_page']) : NULL;
     $refer = array_key_exists('refer',$vars) ? htmlspecialchars($vars['refer']) : NULL;
     $pass = array_key_exists('pass',$vars) ? htmlspecialchars($vars['pass']) : NULL;
@@ -169,8 +169,8 @@ function plugin_pages2csv_action()
     }
     else
     {
-        check_editable($refer);  // ÅºÉÕÀè¤Î¥Ú¡¼¥¸¤¬½ñ¤­¹ş¤ß²ÄÇ½¤«¡©
-        check_readable($s_page); // »²¾ÈÀè¤Î¥Ú¡¼¥¸¤¬ÆÉ¤ß¹ş¤ß²ÄÇ½¤«¡©
+        check_editable($refer);  // æ·»ä»˜å…ˆã®ãƒšãƒ¼ã‚¸ãŒæ›¸ãè¾¼ã¿å¯èƒ½ã‹ï¼Ÿ
+        check_readable($s_page); // å‚ç…§å…ˆã®ãƒšãƒ¼ã‚¸ãŒèª­ã¿è¾¼ã¿å¯èƒ½ã‹ï¼Ÿ
     }
     
     if (PLUGIN_PAGES2CSV_UPLOAD_ADMIN_ONLY and ($pass === NULL or ! pkwk_login($pass) ))
@@ -186,29 +186,29 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
 {
     global $_attach_messages, $_pages2csv_messages;
 
-    // ÍøÍÑ¤¹¤ë¥×¥é¥°¥¤¥ó¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+    // åˆ©ç”¨ã™ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
     if (!exist_plugin('attach') or !function_exists('attach_upload')  )
     {
         return array('msg'=>'attach.inc.php not found or not correct version.');
     }
 
-    // ½ĞÎÏÍÑ¥¨¥ó¥³¡¼¥É¤Î¥µ¥İ¡¼¥È°ìÍ÷(PHP4¤Î»²¹Í½ñ¤è¤ê)
+    // å‡ºåŠ›ç”¨ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®ã‚µãƒãƒ¼ãƒˆä¸€è¦§(PHP4ã®å‚è€ƒæ›¸ã‚ˆã‚Š)
     $supported_encodes = array("EUC-JP"=>"euc","SJIS"=>"sjis","JIS"=>"jis","UTF-8"=>"utf8");
  
-    // ³Æ¼ï¥Ñ¥é¥á¡¼¥¿¤ÎÆÉ¤ß¹ş¤ß
+    // å„ç¨®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
     $list = array_key_exists('list',$vars)   ? htmlspecialchars($vars['list']) : 'list';
     $order = array_key_exists('order',$vars) ? htmlspecialchars($vars['order']) :'_real:SORT_DESC';
     $encode = array_key_exists('encode',$vars) ? htmlspecialchars($vars['encode']) : NULL ;
     $limit = array_key_exists('limit',$vars) ? htmlspecialchars($vars['limit']) : NULL ;
     if( !is_numeric($limit) )
     {
-        $limit= NULL;  // limit ¤Ï¿ôÃÍ¥Ç¡¼¥¿¤ò¼è¤ë¤¿¤á
+        $limit= NULL;  // limit ã¯æ•°å€¤ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚‹ãŸã‚
     }
     $config_name = array_key_exists('config',$vars) ? htmlspecialchars($vars['config']) : 'default';
     $filter_name = array_key_exists('filter',$vars) ? htmlspecialchars($vars['filter']) : NULL ;
     $extract_name = array_key_exists('extract',$vars) ? htmlspecialchars($vars['extract']) : NULL;
     
-    // tracker ¤Î configÀßÄê
+    // tracker ã® configè¨­å®š
     $config = new Config('plugin/tracker/'.$config_name);
     if(!$config->read())
     {
@@ -218,7 +218,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
     }
     $config->config_name = $config_name;
  
-    // tracker_list ¤Î filterÀßÄê
+    // tracker_list ã® filterè¨­å®š
     $list_filter = NULL;
     if($filter_name != NULL)
     {
@@ -226,7 +226,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
         
         if(! $filter_config->read() )
         {
-            // filter ¤ÎÀßÄê¤¬¤Ê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢¥¨¥é¡¼¥í¥°¤òÊÖ¤¹
+            // filter ã®è¨­å®šãŒãªã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°ã‚’è¿”ã™
             return array( 'result' => FALSE,
                           'msg' => "<p>config file '".htmlspecialchars($config->page.'/filters')."' not found</p>",
                           );
@@ -234,7 +234,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
         $list_filter = &new Tracker_plus_list_filter($filter_config, $filter_name);
     }
     
-    // pages2csv ¤Î extractÀßÄê
+    // pages2csv ã® extractè¨­å®š
     $extract_arg_filter = NULL;
     if($extract_name != NULL)
     {
@@ -242,7 +242,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
         
         if( ! $extract_config->read() )
         {
-            // extract ¤ÎÀßÄê¤¬¤Ê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢¥¨¥é¡¼¥í¥°¤òÊÖ¤¹
+            // extract ã®è¨­å®šãŒãªã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°ã‚’è¿”ã™
             return array( 'result' => FALSE,
                           'msg' => "<p>config file '".htmlspecialchars($extract_config->page)."' not found</p>",
                           );
@@ -251,11 +251,11 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
     }
     unset($extract_config);
     
-    // ½ĞÎÏÆâÍÆ¤Î¼èÆÀ
+    // å‡ºåŠ›å†…å®¹ã®å–å¾—
     $pstr = plugin_pages2csv_getcsvlist($s_page,$refer,$config,$list,$order,$limit,
                                         $list_filter, $extract_arg_filter);
     
-    // ½ĞÎÏÆâÍÆ¤Î¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°½èÍı
+    // å‡ºåŠ›å†…å®¹ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°å‡¦ç†
     if ($encode != '' )
     {
         if( !function_exists('mb_convert_encoding') )
@@ -272,7 +272,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
         }
     }
     
-    // ¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ë¤Ø¤Î½ĞÎÏ
+    // ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®å‡ºåŠ›
     if( ! ( $tempname = tempnam( UPLOAD_DIR ,"pages2csv_temp") ) || 
         ! ( $fp = fopen($tempname,"w") ) )
     {
@@ -285,7 +285,7 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
     }
     fclose($fp);
     
-    // ÅºÉÕ¥Õ¥¡¥¤¥ëÌ¾¤Î½àÈ÷
+    // æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«åã®æº–å‚™
     $csvfilename = "pages2csv_". date("ymdHi",time());
     if($encode != '')
     {
@@ -293,9 +293,9 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
     }
     $csvfilename .= ".csv";
     
-    // °Ê²¼¡¢attach.inc.php ¤Î attach_upload()´Ø¿ô¤ò»²¹Í¤Ë¤·¤¿
-    // (ÍıÍ³)°·¤¦¥Õ¥¡¥¤¥ë¤¬HTTP POST¤Ç¥¢¥Ã¥×¥í¡¼¥É¤·¤¿¥Õ¥¡¥¤¥ë¤Ç¤Ï¤Ê¤¤¤¿¤á¡¢
-    // ¾åµ­´Ø¿ô¤òÎ®ÍÑ¤¹¤ë¤³¤È¤¬¤Ç¤­¤Ê¤¤¡£
+    // ä»¥ä¸‹ã€attach.inc.php ã® attach_upload()é–¢æ•°ã‚’å‚è€ƒã«ã—ãŸ
+    // (ç†ç”±)æ‰±ã†ãƒ•ã‚¡ã‚¤ãƒ«ãŒHTTP POSTã§ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ãªã„ãŸã‚ã€
+    // ä¸Šè¨˜é–¢æ•°ã‚’æµç”¨ã™ã‚‹ã“ã¨ãŒã§ããªã„ã€‚
     if (filesize($tempname) > PLUGIN_ATTACH_MAX_FILESIZE )
     {
         unlink($tempname);
@@ -309,10 +309,10 @@ function plugin_pages2csv_upload($vars, $refer, $s_page, $pass)
         return array('result'=>FALSE,'msg'=>$_attach_messages['err_exists']);
     }
     
-    // ÅºÉÕ¥Õ¥¡¥¤¥ë¤ÎÌ¾¾ÎÊÑ¹¹
-    // PHP4.3.3Ì¤Ëş¤Ç¤Ï¡¢rename()¤Ï*nix¥Ù¡¼¥¹¥·¥¹¥Æ¥à¤Ë¤ª¤¤¤Æ¡¢
-    // ¥Ñ¡¼¥Æ¡¼¥·¥ç¥ó±Û¤·¤Ë¥Õ¥¡¥¤¥ëÌ¾¤òÊÑ¹¹¤¹¤ë¤³¤È¤Ï¤Ç¤­¤Ê¤¤¤¿¤á
-    // rename() ¤ÎÂå¤ï¤ê¤Ë copy() ¤òÍÑ¤¤¤ë
+    // æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã®åç§°å¤‰æ›´
+    // PHP4.3.3æœªæº€ã§ã¯ã€rename()ã¯*nixãƒ™ãƒ¼ã‚¹ã‚·ã‚¹ãƒ†ãƒ ã«ãŠã„ã¦ã€
+    // ãƒ‘ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³è¶Šã—ã«ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å¤‰æ›´ã™ã‚‹ã“ã¨ã¯ã§ããªã„ãŸã‚
+    // rename() ã®ä»£ã‚ã‚Šã« copy() ã‚’ç”¨ã„ã‚‹
     if ( copy($tempname,$obj->filename) )
     {
         chmod($obj->filename,PLUGIN_ATTACH_FILE_MODE);
@@ -353,7 +353,7 @@ function plugin_pages2csv_getcsvlist($page,$refer,$config,$list,$order='', $limi
     return $list->toString($limit);
 }
 
-// CSVÍÑ°ìÍ÷¥¯¥é¥¹
+// CSVç”¨ä¸€è¦§ã‚¯ãƒ©ã‚¹
 class Pages2csv_Tracker_csvlist extends Tracker_plus_list
 {
     var $extract_arg_filter = NULL;
@@ -363,7 +363,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
     {
         $cache = NULL;
         
-        // ¿Æ¥¯¥é¥¹¤Î¥³¥ó¥¹¥È¥é¥¯¥¿¤ò¸Æ¤Ó½Ğ¤·¤Æ½é´ü²½
+        // è¦ªã‚¯ãƒ©ã‚¹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³å‡ºã—ã¦åˆæœŸåŒ–
         $this->Tracker_plus_list($page,$refer,$config,$list,$filter_name,$cache);
         
         $this->extract_arg_filter = $extract_arg_filter;
@@ -381,7 +381,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
         {
             $str = $this->items[$name];
             
-            // »ØÄê¤·¤¿¥×¥é¥°¥¤¥ó¤ÎÆÃÄê¤Î¾ì½ê¤Î°ú¿ôÊ¸»úÎó¤òÃê½Ğ¤¹¤ë
+            // æŒ‡å®šã—ãŸãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®ç‰¹å®šã®å ´æ‰€ã®å¼•æ•°æ–‡å­—åˆ—ã‚’æŠ½å‡ºã™ã‚‹
             if( $this->extract_arg_filter != NULL )
             {
                 $str = $this->extract_arg_filter->extracts($str);
@@ -408,8 +408,8 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
             $str = $arr[0];
         }
 
-        // ¥¹¥¿¥¤¥ë½ĞÎÏ¤ò½ü¤¯
-        // ¤³¤³¤Ç¥×¥é¥°¥¤¥ó¤Î°ú¿ô¤òÃê½Ğ¤¹¤ë¡£
+        // ã‚¹ã‚¿ã‚¤ãƒ«å‡ºåŠ›ã‚’é™¤ã
+        // ã“ã“ã§ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®å¼•æ•°ã‚’æŠ½å‡ºã™ã‚‹ã€‚
         
         return $this->pipe ? str_replace('|','&#x7c;',$str) : $str;
   
@@ -417,7 +417,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
   
     function replace_title($arr)
     {
-        // ¥¹¥¿¥¤¥ë½ĞÎÏ¤ò½ü¤¯
+        // ã‚¹ã‚¿ã‚¤ãƒ«å‡ºåŠ›ã‚’é™¤ã
         global $script;
         
         $field = $arr[1];
@@ -428,7 +428,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
         
         $title = $this->fields[$field]->title;
         
-        // ¥ê¥ó¥¯¾ğÊó¤Ê¤É¤Ï³°¤·¤Æ..
+        // ãƒªãƒ³ã‚¯æƒ…å ±ãªã©ã¯å¤–ã—ã¦..
         return "$title";
     }
     
@@ -459,7 +459,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
 
             if (preg_match('/^\|(.+)\|[hH]$/',$line) )
             {
-                // É½ÄêµÁ¤Î¥Ñ¥¤¥×¶èÀÚ¤ê¤òCSV·Á¼°¶èÀÚ¤ê¤ËÊÑ¹¹
+                // è¡¨å®šç¾©ã®ãƒ‘ã‚¤ãƒ—åŒºåˆ‡ã‚Šã‚’CSVå½¢å¼åŒºåˆ‡ã‚Šã«å¤‰æ›´
                 // $line = preg_replace('/^",(.+),"|[hHfF]$/','$1',$line);
                 $line = preg_replace('/\|/',',', $line); 
                 $line = preg_replace('/\~/','', $line); 
@@ -476,7 +476,7 @@ class Pages2csv_Tracker_csvlist extends Tracker_plus_list
             }
             else
             {
-                // É½ÄêµÁ¤Î¥Ñ¥¤¥×¶èÀÚ¤ê¤òCSV·Á¼°¶èÀÚ¤ê¤ËÊÑ¹¹
+                // è¡¨å®šç¾©ã®ãƒ‘ã‚¤ãƒ—åŒºåˆ‡ã‚Šã‚’CSVå½¢å¼åŒºåˆ‡ã‚Šã«å¤‰æ›´
                 $line = preg_replace('/\|/','","', $line); 
                 $line = preg_replace('/^",(.+),"$/','$1',$line);
                 

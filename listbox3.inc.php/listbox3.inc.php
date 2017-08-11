@@ -10,12 +10,12 @@
 // License: GPL v2 or (at your option) any later version
 //
 
-// ½¤Àµ¸å¤Î¥ê¥í¡¼¥É»ş¤Ë¡¢ÊÔ½¸²Õ½ê¤ØÉ½¼¨²Õ½ê¤ò°Ü¤¹
-// Í­¸ú¤Ë¤¹¤ë¾ì¹ç¤Ë¤Ï¡¢TRUE , Ìµ¸ú¤Ë¤¹¤ë¾ì¹ç¤Ë¤Ï FALSE ¤ò»ØÄê
+// ä¿®æ­£å¾Œã®ãƒªãƒ­ãƒ¼ãƒ‰æ™‚ã«ã€ç·¨é›†ç®‡æ‰€ã¸è¡¨ç¤ºç®‡æ‰€ã‚’ç§»ã™
+// æœ‰åŠ¹ã«ã™ã‚‹å ´åˆã«ã¯ã€TRUE , ç„¡åŠ¹ã«ã™ã‚‹å ´åˆã«ã¯ FALSE ã‚’æŒ‡å®š
 define('LISTBOX3_JUMP_TO_MODIFIED_PLACE',FALSE); // TRUE or FALSE
-// ¥ê¥¹¥È¥¢¥¤¥Æ¥à¤Ë½ñ¼°¤òÅ¬ÍÑ¤¹¤ë(¿§»ØÄê¤Î¤ß)
+// ãƒªã‚¹ãƒˆã‚¢ã‚¤ãƒ†ãƒ ã«æ›¸å¼ã‚’é©ç”¨ã™ã‚‹(è‰²æŒ‡å®šã®ã¿)
 define('LISTBOX3_APPLY_FORMAT',TRUE); // TRUE or FALSE
-// ¥â¡¼¥ÉÊÑ¹¹¤òÅ¬ÍÑ¤¹¤ë
+// ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚’é©ç”¨ã™ã‚‹
 define('LISTBOX3_APPLY_MODECHANGE',TRUE); // TRUE or FALSE
 
 function plugin_listbox3_init()
@@ -50,7 +50,7 @@ function plugin_listbox3_action()
 				$opt = $match[1];
 				if($vars['number'] == $number++)
 				{
-					//¥¿¡¼¥²¥Ã¥È¤Î¥×¥é¥°¥¤¥óÉôÊ¬
+					//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³éƒ¨åˆ†
 					$opt = preg_replace('/[^,]*/', $vars['select'], $opt, 1);
 				}
 				$line .= "#listbox3($opt)" . $paddata[$i+1];
@@ -68,14 +68,14 @@ function plugin_listbox3_action()
 	return array('msg' => '', 'body' => '');
 }
 
-// headerÀë¸À¤ÎÃæ¤Ç°Ê²¼¤Î£²¤Ä¤ÎÄêµÁ¤ò¹Ô¤¦
-// ¡¦Javascipt¤òÍÑ¤¤¤ë¤³¤È¡¢
-// ¡¦XHTML1.0 Transitional Mode¤Ç¤ÎÆ°ºî¡Ê<form>¥¿¥°¤ËnameÂ°À­¤òÍÑ¤¤¤ë¡Ë
+// headerå®£è¨€ã®ä¸­ã§ä»¥ä¸‹ã®ï¼’ã¤ã®å®šç¾©ã‚’è¡Œã†
+// ãƒ»Javasciptã‚’ç”¨ã„ã‚‹ã“ã¨ã€
+// ãƒ»XHTML1.0 Transitional Modeã§ã®å‹•ä½œï¼ˆ<form>ã‚¿ã‚°ã«nameå±æ€§ã‚’ç”¨ã„ã‚‹ï¼‰
 function plugin_listbox3_headDeclaration()
 {
 	global $pkwk_dtd, $javascript,$head_tags;
 
-	// Javascipt¤òÍÑ¤¤¤ë¤³¤È¡¢<form>¥¿¥°¤ËnameÂ°À­¤òÍÑ¤¤¤ë¤³¤È¤òÄÌÃÎ¤¹¤ë
+	// Javasciptã‚’ç”¨ã„ã‚‹ã“ã¨ã€<form>ã‚¿ã‚°ã«nameå±æ€§ã‚’ç”¨ã„ã‚‹ã“ã¨ã‚’é€šçŸ¥ã™ã‚‹
 	if( PKWK_ALLOW_JAVASCRIPT && LISTBOX3_APPLY_MODECHANGE )
 	{
 		// XHTML 1.0 Transitional
@@ -84,11 +84,11 @@ function plugin_listbox3_headDeclaration()
 			$pkwk_dtd = PKWK_DTD_XHTML_1_0_TRANSITIONAL;
 		}
     
-		// <head> ¥¿¥°Æâ¤Ø¤Î <meta>Àë¸À¤ÎÄÉ²Ã
+		// <head> ã‚¿ã‚°å†…ã¸ã® <meta>å®£è¨€ã®è¿½åŠ 
 		$javascript = TRUE;
 	}
 
-	// <head> ¥¿¥°Æâ¤Ø¤Î <meta>Àë¸À¤ÎÄÉ²Ã
+	// <head> ã‚¿ã‚°å†…ã¸ã® <meta>å®£è¨€ã®è¿½åŠ 
 	$meta_str =
 		" <meta http-equiv=\"content-script-type\" content=\"text/javascript\" /> ";
 	if(! in_array($meta_str, $head_tags) )
@@ -103,7 +103,7 @@ function plugin_listbox3_convert()
 
 	$number = plugin_listbox3_getNumber();
 
-	// header ¤ÎÀë¸À
+	// header ã®å®£è¨€
 	if( $number == 0 )
 	{
 		plugin_listbox3_headDeclaration();
@@ -139,7 +139,7 @@ function plugin_listbox3_getBody($number, $value, $template, $fieldname)
 	$page_enc = htmlspecialchars($vars['page']);
 	$script_enc = htmlspecialchars($script);
 	
-	// listbox3 ÍÑ¤Î<script>¥¿¥°¤ÎÁŞÆş ( for LISTBOX3_APPLY_MODECHANGE )
+	// listbox3 ç”¨ã®<script>ã‚¿ã‚°ã®æŒ¿å…¥ ( for LISTBOX3_APPLY_MODECHANGE )
 	$extrascript = (PKWK_ALLOW_JAVASCRIPT && LISTBOX3_APPLY_MODECHANGE && $number == 0) ? plugin_listbox3_getScript() : '';
 
 	$options_html = plugin_listbox3_getOptions($value, $template, $fieldname);
@@ -226,7 +226,7 @@ function plugin_listbox3_getOptions($value, $config_name, $field_name)
   
 	if( $isSelect == 0 )
 	{
-		$options_html = "<option value='¡Ä' selected='selected'>¡Ä</option>" . $options_html;
+		$options_html = "<option value='â€¦' selected='selected'>â€¦</option>" . $options_html;
 	}
 	return $options_html;
 }

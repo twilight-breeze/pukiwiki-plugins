@@ -6,7 +6,7 @@
 //
 // License   : GNU General Public License (GPL) 
 // 
-// 1ÉÃ¤ÎÂç¤­¤µ¤ÎÄêµÁ
+// 1ç§’ã®å¤§ãã•ã®å®šç¾©
 define ('TRACKER_SUMMARY_ITEM_TIME_TYPE_SEC'  ,1);
 define ('TRACKER_SUMMARY_ITEM_TIME_TYPE_MSEC' ,1000);
 define ('TRACKER_SUMMARY_ITEM_TIME_TYPE_FILM' ,24);
@@ -63,7 +63,7 @@ function plugin_tracker_summary_item_convert()
 
 	if( $isSuccess )
 	{
-		return $title . '¤Î¹ç·×¡§' . $sum;
+		return $title . 'ã®åˆè¨ˆï¼š' . $sum;
 	}
 	else
 	{
@@ -155,7 +155,7 @@ function plugin_tracker_summary_item_getsum($page, $refer, $config_name, $list,
 		return array( $isSuccess, $errmsg, $title , $sum);
 	}
 
-	// $list ÊÑ¿ô¤¬ÊÌ¤Î°ÕÌ£¤Ç»È¤¤¤Ş¤ï¤µ¤ì¤Æ¤¤¤ë¤Î¤ÇÃí°Õ!! (jjyun's comment)
+	// $list å¤‰æ•°ãŒåˆ¥ã®æ„å‘³ã§ä½¿ã„ã¾ã‚ã•ã‚Œã¦ã„ã‚‹ã®ã§æ³¨æ„!! (jjyun's comment)
 	$list = &new Tracker_plus_list($page,$refer,$config,$list,$filter_name,$cache);
 
 	if($filter_name != NULL)
@@ -163,7 +163,7 @@ function plugin_tracker_summary_item_getsum($page, $refer, $config_name, $list,
 		$filter_config = new Tracker_plus_FilterConfig('plugin/tracker/'.$config->config_name.'/filters');
 		if( ! $filter_config->read() )
 		{
-			// filter¤ÎÀßÄê¤¬¤Ê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ, ¥¨¥é¡¼¥í¥°¤òÊÖ¤¹
+			// filterã®è¨­å®šãŒãªã•ã‚Œã¦ã„ãªã‘ã‚Œã°, ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°ã‚’è¿”ã™
 			$errmsg = "config file '".htmlspecialchars($config->page.'/filters')."' not found.";
 			return array( $isSuccess, $errmsg, $title , $sum);
 		}
@@ -190,7 +190,7 @@ function plugin_tracker_summary_item_getsum($page, $refer, $config_name, $list,
 
 	if( $summary_calc->target_name == '_line' )
 	{ 
-		$title = '¥ê¥¹¥È·ï¿ô';
+		$title = 'ãƒªã‚¹ãƒˆä»¶æ•°';
 		$sum = $summary_calc->get_count();
 	}
 	else 
@@ -349,7 +349,7 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 		if( $output_data_type != TRACKER_SUMMARY_ITEM_TIME_TYPE_SEC && 
 		    $this->data_type != $output_data_type )
 		{
-			$this->errMsg = "Æş½ĞÎÏ¥Õ¥©¡¼¥Ş¥Ã¥È´Ö¤Ë¡¢¸ß´¹À­¤Î¤Ê¤¤»ØÄê¤¬¤Ê¤µ¤ì¤Æ¤¤¤Ş¤¹¡£";
+			$this->errMsg = "å…¥å‡ºåŠ›ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆé–“ã«ã€äº’æ›æ€§ã®ãªã„æŒ‡å®šãŒãªã•ã‚Œã¦ã„ã¾ã™ã€‚";
 			return FALSE;
 		}
 
@@ -368,20 +368,20 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 
 		// === format check part ===
 
-		// ¥¯¥©¡¼¥ÈÊ¸»ú¤ÎÂ¸ºß³ÎÇ§
+		// ã‚¯ã‚©ãƒ¼ãƒˆæ–‡å­—ã®å­˜åœ¨ç¢ºèª
 		if( preg_match('/^.*[\'\"].*$/',$formatReg) ){ /* match character..." ' */
-		  $this->errMsg = sprintf("»ş´Ö½ñ¼°Ê¸»úÎó %s ¤Ë¥¯¥©¡¼¥ÈÊ¸»ú(&nbsp;&#039;&nbsp;&quot;&nbsp;)¤ò»ÈÍÑ¤·¤Ê¤¤¤Ç¤¯¤À¤µ¤¤", $formatStr);
+		  $this->errMsg = sprintf("æ™‚é–“æ›¸å¼æ–‡å­—åˆ— %s ã«ã‚¯ã‚©ãƒ¼ãƒˆæ–‡å­—(&nbsp;&#039;&nbsp;&quot;&nbsp;)ã‚’ä½¿ç”¨ã—ãªã„ã§ãã ã•ã„", $formatStr);
 		  return FALSE;
 		}
 
-		/* ÆşÎÏÃÍ¤È»ş¹ï½ñ¼°¤È¤ÎÈæ³Ó */
+		/* å…¥åŠ›å€¤ã¨æ™‚åˆ»æ›¸å¼ã¨ã®æ¯”è¼ƒ */
 		// - available time format - 
 		// H:hour , M:minute, S:sec 
 		// F:FILM, N:NTSC, P:PAL , m:millisec 
 
 		// duplication check in format 
 		$dupcheck=count_chars($formatReg);
-		$f_dupcnt=0; // variable for checking for 1ÉÃ°Ê²¼¤ÎÃ±°Ì
+		$f_dupcnt=0; // variable for checking for 1ç§’ä»¥ä¸‹ã®å˜ä½
 		$time_formats = array("H","M","S","m","F","P","N");
 		foreach($time_formats as $unit)
 		{
@@ -389,11 +389,11 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 			{
 				if($dupcheck[ord($unit)] > 1 )
 				{
-				  $this->errMsg = sprintf("»ş´Ö½ñ¼°Ê¸»úÎó %s ¤Ë»ş¹ï»ØÄê»Ò¤Î½ÅÊ£¤¬¤¢¤ê¤Ş¤¹¡£", $formatStr);
+				  $this->errMsg = sprintf("æ™‚é–“æ›¸å¼æ–‡å­—åˆ— %s ã«æ™‚åˆ»æŒ‡å®šå­ã®é‡è¤‡ãŒã‚ã‚Šã¾ã™ã€‚", $formatStr);
 				  return FALSE;
 			  }
 			  
-			// 1ÉÃ°Ê²¼¤ÎÃ±°Ì¤Î½ÅÊ£³ÎÇ§
+			// 1ç§’ä»¥ä¸‹ã®å˜ä½ã®é‡è¤‡ç¢ºèª
 			  if( $unit == "m" || $unit == "F" || 
 			      $unit == "P" || $unit == "N" ) 
 			  {
@@ -404,7 +404,7 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 		}
 		if( $f_dupcnt > 1)
 		{
-			$this->errMsg = sprintf("»ş´Ö½ñ¼°Ê¸»úÎó %s ¤ËÉÃ°Ê²¼¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¤¬½ÅÊ£¤·¤Æ¤Ş¤¹¡£", $formatStr);
+			$this->errMsg = sprintf("æ™‚é–“æ›¸å¼æ–‡å­—åˆ— %s ã«ç§’ä»¥ä¸‹ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãŒé‡è¤‡ã—ã¦ã¾ã™ã€‚", $formatStr);
 			return FALSE;
 		}
 		return TRUE;
@@ -427,7 +427,7 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 		  $msecFormat='%03d';
 		}
 
-		// ¶èÀÚ¤êÊ¸»ú¤¬ '/'(¥Ğ¥Ã¥¯¥¹¥é¥Ã¥·¥å)¤Î¾ì¹ç¤Ï¥¨¥¹¥±¡¼¥×Ê¸»ú¤òÉÕÍ¿¤¹¤ë
+		// åŒºåˆ‡ã‚Šæ–‡å­—ãŒ '/'(ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥)ã®å ´åˆã¯ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—æ–‡å­—ã‚’ä»˜ä¸ã™ã‚‹
 		$formatPtn = preg_replace('/\//','\\/',$formatStr);
 
 		$formatPtn = preg_replace('/(H|M|S)/',$numFormat,$formatPtn);
@@ -473,10 +473,10 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 	function makeVariableArgsPtn($formatStr,$isInput)
 	{
 		// making timeArgs
-		// ¶èÀÚ¤êÊ¸»ú¤¬ '/'(¥Ğ¥Ã¥¯¥¹¥é¥Ã¥·¥å)¤Î¾ì¹ç¤Ï¥¨¥¹¥±¡¼¥×Ê¸»ú¤òÉÕÍ¿¤¹¤ë
+		// åŒºåˆ‡ã‚Šæ–‡å­—ãŒ '/'(ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥)ã®å ´åˆã¯ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—æ–‡å­—ã‚’ä»˜ä¸ã™ã‚‹
 		$timeArgs =  preg_replace('/\//','\\/',$formatStr);
 
-		// ¾®Ê¸»ú¤Î 'm' ¤òÀè¤Ë½èÍı¤¹¤ëÉ¬Í×¤¬¤¢¤ë
+		// å°æ–‡å­—ã® 'm' ã‚’å…ˆã«å‡¦ç†ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 		if( $isInput) 
 		{
 			$timeArgs =  preg_replace('/m/',',\$msec', $timeArgs);
@@ -509,10 +509,10 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 
 	function getValue($dataStr) // in other words, this is parseStr(). 
 	{
-		// ¶èÀÚ¤êÊ¸»ú¤¬ '/'(¥Ğ¥Ã¥¯¥¹¥é¥Ã¥·¥å)¤Î¾ì¹ç¤Ï¥¨¥¹¥±¡¼¥×Ê¸»ú¤òÉÕÍ¿¤¹¤ë
+		// åŒºåˆ‡ã‚Šæ–‡å­—ãŒ '/'(ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥)ã®å ´åˆã¯ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—æ–‡å­—ã‚’ä»˜ä¸ã™ã‚‹
 		$scanStr = preg_replace('/\//','\\/',$dataStr);
 		
-		// Äê¿ô¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤¿¾ì¹ç
+		// å®šæ•°ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãŸå ´åˆ
 		if(strcmp($scanStr,$this->inputFormatPtn) == 0)
 		{
 			return 0;
@@ -546,7 +546,7 @@ class Tracker_summary_item_DATA_TYPE_TIME extends Tracker_summary_item_DATA_TYPE
 	{
 		$hour = $min = $sec = $ftime = -1;
 
-		// 1ÉÃ°Ê²¼¤ÎÃÍ¤ÎÀÚ¤ê½Ğ¤·
+		// 1ç§’ä»¥ä¸‹ã®å€¤ã®åˆ‡ã‚Šå‡ºã—
 		$ftime = $sumValue % $this->data_type ;
 		$sec = floor($sumValue / $this->data_type) ;
 

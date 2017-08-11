@@ -10,41 +10,41 @@
 require_once(PLUGIN_DIR . 'tracker.inc.php');
 
 /////////////////////////////////////////////////////////////////////////////
-// tracker_list¤ÇÉ½¼¨¤·¤Ê¤¤¥Ú¡¼¥¸Ì¾(Àµµ¬É½¸½¤Ç)
-// 'SubMenu'¥Ú¡¼¥¸ ¤ª¤è¤Ó '/'¤ò´Ş¤à¥Ú¡¼¥¸¤ò½ü³°¤¹¤ë
+// tracker_listã§è¡¨ç¤ºã—ãªã„ãƒšãƒ¼ã‚¸å(æ­£è¦è¡¨ç¾ã§)
+// 'SubMenu'ãƒšãƒ¼ã‚¸ ãŠã‚ˆã³ '/'ã‚’å«ã‚€ãƒšãƒ¼ã‚¸ã‚’é™¤å¤–ã™ã‚‹
 define('TRACKER_PLUS_LIST_EXCLUDE_PATTERN','#^SubMenu$|/#');
-// À©¸Â¤·¤Ê¤¤¾ì¹ç¤Ï¤³¤Á¤é
+// åˆ¶é™ã—ãªã„å ´åˆã¯ã“ã¡ã‚‰
 //define('TRACKER_PLUS_LIST_EXCLUDE_PATTERN','#(?!)#');
 
 /////////////////////////////////////////////////////////////////////////////
-// ¹àÌÜ¤Î¼è¤ê½Ğ¤·¤Ë¼ºÇÔ¤·¤¿¥Ú¡¼¥¸¤ò°ìÍ÷¤ËÉ½¼¨¤¹¤ë
+// é …ç›®ã®å–ã‚Šå‡ºã—ã«å¤±æ•—ã—ãŸãƒšãƒ¼ã‚¸ã‚’ä¸€è¦§ã«è¡¨ç¤ºã™ã‚‹
 define('TRACKER_PLUS_LIST_SHOW_ERROR_PAGE',TRUE);
 
 /////////////////////////////////////////////////////////////////////////////
-// CacheLevel¤Î¥Ç¥Õ¥©¥ë¥È¤ÎÀßÄê
-// ** ÀßÄêÃÍ¤ÎÀâÌÀ ** Éé¤ÎÃÍ¤Ï¾éÄ¹¥â¡¼¥É¤òÉ½¤·¤Ş¤¹
-//        0 : ¥­¥ã¥Ã¥·¥å¥í¥¸¥Ã¥¯¤òÍøÍÑ¤·¤Ê¤¤ 
-//  1 or -1 : ¥Ú¡¼¥¸¤ÎÆÉ¤ß¹ş¤ß½èÍı¤ËÂĞ¤¹¤ë¥­¥ã¥Ã¥·¥å¤òÍ­¸ú¤Ë¤¹¤ë
-//  2 or -2 : html¤ËÊÑ´¹¸å¤Î¥Ç¡¼¥¿¤Î¥­¥ã¥Ã¥·¥å¤òÍ­¸ú¤Ë¤¹¤ë
+// CacheLevelã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¨­å®š
+// ** è¨­å®šå€¤ã®èª¬æ˜ ** è² ã®å€¤ã¯å†—é•·ãƒ¢ãƒ¼ãƒ‰ã‚’è¡¨ã—ã¾ã™
+//        0 : ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ­ã‚¸ãƒƒã‚¯ã‚’åˆ©ç”¨ã—ãªã„ 
+//  1 or -1 : ãƒšãƒ¼ã‚¸ã®èª­ã¿è¾¼ã¿å‡¦ç†ã«å¯¾ã™ã‚‹ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æœ‰åŠ¹ã«ã™ã‚‹
+//  2 or -2 : htmlã«å¤‰æ›å¾Œã®ãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 define('TRACKER_PLUS_LIST_CACHE_DEFAULT', 0); 
 // define('TRACKER_PLUS_LIST_CACHE_DEFAULT', 1); 
 // define('TRACKER_PLUS_LIST_CACHE_DEFAULT', 2); 
 
 /////////////////////////////////////////////////////////////////////////////
 // [Dynamic Filter Configration Section]
-// ¥Õ¥£¥ë¥¿¤ò»ØÄê»ş¤Ë¤ª¤±¤ë¡¢Æ°Åª¥Õ¥£¥ë¥¿ÁªÂò¤Î¥Ç¥Õ¥©¥ë¥ÈÀßÄê
-//  ** ÀßÄêÃÍ¤ÎÀâÌÀ ** filterÌ¾¤ÎÆ¬¤Ë + or - ¤òÉÕ¤±¤ë¤È¥ê¥¹¥ÈÉ½¼¨¤ÎÀ©¸æ¤Ï²ÄÇ½¤Ç¤¹¤¬...
-//   TRUE : filterÌ¾¤ÎÀèÆ¬¤Ë + ¤ò»ØÄê¤·¤Ê¤¯¤Æ¤â¥Õ¥£¥ë¥¿ÁªÂòÍÑ¤Î¥ê¥¹¥È¤òÉ½¼¨¤·¤Ş¤¹
-//  FALSE : filterÌ¾¤ÎÀèÆ¬¤Ë + ¤ò»ØÄê¤·¤Ê¤¤¤È¡¢¥Õ¥£¥ë¥¿ÁªÂòÍÑ¤Î¥ê¥¹¥È¤ÏÉ½¼¨¤·¤Ş¤»¤ó
+// ãƒ•ã‚£ãƒ«ã‚¿ã‚’æŒ‡å®šæ™‚ã«ãŠã‘ã‚‹ã€å‹•çš„ãƒ•ã‚£ãƒ«ã‚¿é¸æŠã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
+//  ** è¨­å®šå€¤ã®èª¬æ˜ ** filteråã®é ­ã« + or - ã‚’ä»˜ã‘ã‚‹ã¨ãƒªã‚¹ãƒˆè¡¨ç¤ºã®åˆ¶å¾¡ã¯å¯èƒ½ã§ã™ãŒ...
+//   TRUE : filteråã®å…ˆé ­ã« + ã‚’æŒ‡å®šã—ãªãã¦ã‚‚ãƒ•ã‚£ãƒ«ã‚¿é¸æŠç”¨ã®ãƒªã‚¹ãƒˆã‚’è¡¨ç¤ºã—ã¾ã™
+//  FALSE : filteråã®å…ˆé ­ã« + ã‚’æŒ‡å®šã—ãªã„ã¨ã€ãƒ•ã‚£ãƒ«ã‚¿é¸æŠç”¨ã®ãƒªã‚¹ãƒˆã¯è¡¨ç¤ºã—ã¾ã›ã‚“
 define('TRACKER_PLUS_LIST_DYNAMIC_FILTER_DEFAULT', TRUE);
 //
 /////////////////////////////////////////////////////////////////////////////
-// Æ°Åª¥Õ¥£¥ë¥¿¤Î¥ê¥¹¥È¥é¥Ù¥ë¤Î³ÈÄ¥ÀßÄê
+// å‹•çš„ãƒ•ã‚£ãƒ«ã‚¿ã®ãƒªã‚¹ãƒˆãƒ©ãƒ™ãƒ«ã®æ‹¡å¼µè¨­å®š
 define('TRACKER_PLUS_LIST_APPLY_LISTFORMAT',TRUE);
 //
 //////////////////////////////////////////////////////////////////////////////
 // [Paging Configration Section] 
-// ¥ê¥¹¥ÈÉ½¼¨»ş¤Î¥Ú¡¼¥¸¥ó¥°µ¡Ç½¤ÎÀßÄê
+// ãƒªã‚¹ãƒˆè¡¨ç¤ºæ™‚ã®ãƒšãƒ¼ã‚¸ãƒ³ã‚°æ©Ÿèƒ½ã®è¨­å®š
 // 0: Disable paging ( same as tracker.inc.php)
 // 1:  Enable paging with only LinkMark.
 // 2:  Enable paging with only less/more MarkStr.
@@ -53,13 +53,13 @@ define('TRACKER_PLUS_LIST_APPLY_LISTFORMAT',TRUE);
 //define('TRACKER_PLUS_LIST_PAGING', 1);
 //define('TRACKER_PLUS_LIST_PAGING', 2);
 define('TRACKER_PLUS_LIST_PAGING', 3);
-// °ìÅÙ¤ËÉ½¼¨¤¹¤ë linkMark ¤Î¿ô 
+// ä¸€åº¦ã«è¡¨ç¤ºã™ã‚‹ linkMark ã®æ•° 
 define('TRACKER_PLUS_LIST_PAGING_MARK_NUMBER_PER_ONCE', 10);
 //
 /////////////////////////////////////////////////////////////////////////////
-// ¥ê¥¹¥ÈºîÀ®»ş¤Ë¥Ú¡¼¥¸¥ì¥¤¥¢¥¦¥È¤òÉ¾²Á¤¹¤ëÈÏ°Ï¤ò
-// "//////////" ¤ÎÄ¾Á°¤Ş¤Ç¤ËÀ©¸Â¤¹¤ë.
-// ( ¥Ñ¥¿¡¼¥ó¥Ş¥Ã¥Á¥ó¥°¤¹¤ë¥ì¥¤¥¢¥¦¥ÈÈÏ°Ï¤ÎÀ©¸æ
+// ãƒªã‚¹ãƒˆä½œæˆæ™‚ã«ãƒšãƒ¼ã‚¸ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’è©•ä¾¡ã™ã‚‹ç¯„å›²ã‚’
+// "//////////" ã®ç›´å‰ã¾ã§ã«åˆ¶é™ã™ã‚‹.
+// ( ãƒ‘ã‚¿ãƒ¼ãƒ³ãƒãƒƒãƒãƒ³ã‚°ã™ã‚‹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆç¯„å›²ã®åˆ¶å¾¡
 define('TRACKER_PLUS_LIST_APPLY_LIMIT_PARSERANGE',TRUE);
 //
 // *** Definition for codes, Don't modify...***
@@ -84,20 +84,20 @@ function plugin_tracker_plus_init_ja()
     $msg = array(
      //        '_tracker_plus_msg' => array(),
         '_tracker_plus_list_msg' => array(
-            'nodata'             => '°ìÍ÷¤ËÉ½¼¨¤¹¤ë¹àÌÜ¤Ï¤¢¤ê¤Ş¤»¤ó.',
-            'paging'             => 'Á´ $1·ïÃæ¡¢$2 ·ïÌÜ ¤«¤é $3 ·ïÌÜ ¤Ş¤ÇÉ½¼¨¤·¤Æ¤¤¤Ş¤¹.' ,
-            'paging_linkMark'    => '¢£',
-            'paging_lessMark'    => '¡Ô',
-            'paging_moreMark'    => '¡Õ',
-            'paging_lessMarkStr' => '[Á°¤Î $1 ·ï]',
-            'paging_moreMarkStr' => '[¼¡¤Î $1 ·ï]',
-            'filter_label'          => '¹Ê¤ê¹ş¤ß¾ò·ï°ìÍ÷',
-            'filter_extTitle'    => '³ÈÄ¥¸«½Ğ¤·',
-            'filter_title_logicalOperator' => 'Ï¢·ë¾ò·ï',
-            'filter_title_targetField'     => 'ÂĞ¾İ¹àÌÜ',
-            'filter_title_operator'        => '¾ò·ï',
-            'filter_title_conditionValues' => '¾ò·ïÃÍ',
-            'filter_definition_error'      => '¥Õ¥£¥ë¥¿¾ò·ï¤¬ÉÔÀµ¤Ç¤¹'
+            'nodata'             => 'ä¸€è¦§ã«è¡¨ç¤ºã™ã‚‹é …ç›®ã¯ã‚ã‚Šã¾ã›ã‚“.',
+            'paging'             => 'å…¨ $1ä»¶ä¸­ã€$2 ä»¶ç›® ã‹ã‚‰ $3 ä»¶ç›® ã¾ã§è¡¨ç¤ºã—ã¦ã„ã¾ã™.' ,
+            'paging_linkMark'    => 'â– ',
+            'paging_lessMark'    => 'ã€Š',
+            'paging_moreMark'    => 'ã€‹',
+            'paging_lessMarkStr' => '[å‰ã® $1 ä»¶]',
+            'paging_moreMarkStr' => '[æ¬¡ã® $1 ä»¶]',
+            'filter_label'          => 'çµã‚Šè¾¼ã¿æ¡ä»¶ä¸€è¦§',
+            'filter_extTitle'    => 'æ‹¡å¼µè¦‹å‡ºã—',
+            'filter_title_logicalOperator' => 'é€£çµæ¡ä»¶',
+            'filter_title_targetField'     => 'å¯¾è±¡é …ç›®',
+            'filter_title_operator'        => 'æ¡ä»¶',
+            'filter_title_conditionValues' => 'æ¡ä»¶å€¤',
+            'filter_definition_error'      => 'ãƒ•ã‚£ãƒ«ã‚¿æ¡ä»¶ãŒä¸æ­£ã§ã™'
         )
     ); 
     return $msg;
@@ -110,9 +110,9 @@ function plugin_tracker_plus_init_en()
         '_tracker_plus_list_msg' => array(
             'nodata'             => 'There is no item displayed in List.',
             'paging'             => 'This displays it from the $2 th to the $3 th among $1.',
-            'paging_linkMark'    => '¢£',
-            'paging_lessMark'    => '¡Ô',
-            'paging_moreMark'    => '¡Õ',
+            'paging_linkMark'    => 'â– ',
+            'paging_lessMark'    => 'ã€Š',
+            'paging_moreMark'    => 'ã€‹',
             'paging_lessMarkStr' => '[Before $1 ]',
             'paging_moreMarkStr' => '[Next $1 ]',
             'filter_label'       => 'FilterList of TrackerList',
@@ -267,7 +267,7 @@ function plugin_tracker_plus_action()
             'body'=>'page template ('.htmlspecialchars($source).') is not exist.'
         );
     }
-    // ¥Ú¡¼¥¸Ì¾¤ò·èÄê
+    // ãƒšãƒ¼ã‚¸åã‚’æ±ºå®š
     $base = $post['_base'];
     $num = 0;
     $name = (array_key_exists('_name',$post)) ? $post['_name'] : '';
@@ -294,10 +294,10 @@ function plugin_tracker_plus_action()
     // org: QuestionBox3/211: Apply edit_auth_pages to creating page
     edit_auth($page,true,true);
 
-    // ¥Ú¡¼¥¸¥Ç¡¼¥¿¤òÀ¸À®
+    // ãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
     $postdata = plugin_tracker_plus_get_source($source);
 
-    // µ¬Äê¤Î¥Ç¡¼¥¿
+    // è¦å®šã®ãƒ‡ãƒ¼ã‚¿
     $_post = array_merge($post,$_FILES);
     $_post['_date'] = $now;
     $_post['_page'] = $page;
@@ -350,23 +350,23 @@ function plugin_tracker_plus_action()
     exit;
 }
 
-// ¥Õ¥£¡¼¥ë¥É¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤¹¤ë
+// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã™ã‚‹
 function plugin_tracker_plus_get_fields($base,$refer,&$config)
 {
     global $now,$_tracker_messages;
 
     $fields = array();
-    // Í½Ìó¸ì
+    // äºˆç´„èª
     foreach( array(
-                 '_date'   => 'text',        // Åê¹ÆÆü»ş
-                 '_update' => 'date',        // ºÇ½ª¹¹¿·
-                 '_past'   => 'past',        // ·Ğ²á(passage)
-                 '_page'   => 'page',        // ¥Ú¡¼¥¸Ì¾
-                 '_name'   => 'text',        // »ØÄê¤µ¤ì¤¿¥Ú¡¼¥¸Ì¾
-                 '_real'   => 'real',        // ¼Âºİ¤Î¥Ú¡¼¥¸Ì¾
-                 '_refer'  => 'page',        // »²¾È¸µ(¥Õ¥©¡¼¥à¤Î¤¢¤ë¥Ú¡¼¥¸)
-                 '_base'   => 'page',        // ´ğ½à¥Ú¡¼¥¸
-                 '_submit' => 'submit_plus', // ÄÉ²Ã¥Ü¥¿¥ó
+                 '_date'   => 'text',        // æŠ•ç¨¿æ—¥æ™‚
+                 '_update' => 'date',        // æœ€çµ‚æ›´æ–°
+                 '_past'   => 'past',        // çµŒé(passage)
+                 '_page'   => 'page',        // ãƒšãƒ¼ã‚¸å
+                 '_name'   => 'text',        // æŒ‡å®šã•ã‚ŒãŸãƒšãƒ¼ã‚¸å
+                 '_real'   => 'real',        // å®Ÿéš›ã®ãƒšãƒ¼ã‚¸å
+                 '_refer'  => 'page',        // å‚ç…§å…ƒ(ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚ã‚‹ãƒšãƒ¼ã‚¸)
+                 '_base'   => 'page',        // åŸºæº–ãƒšãƒ¼ã‚¸
+                 '_submit' => 'submit_plus', // è¿½åŠ ãƒœã‚¿ãƒ³
                  ) as $field=>$class)
     {
         $class = 'Tracker_field_'.$class;
@@ -375,10 +375,10 @@ function plugin_tracker_plus_get_fields($base,$refer,&$config)
 
     foreach( $config->get('fields') as $field)
     {
-        // 0=>¹àÌÜÌ¾ 1=>¸«½Ğ¤· 2=>·Á¼° 3=>¥ª¥×¥·¥ç¥ó 4=>¥Ç¥Õ¥©¥ë¥ÈÃÍ
+        // 0=>é …ç›®å 1=>è¦‹å‡ºã— 2=>å½¢å¼ 3=>ã‚ªãƒ—ã‚·ãƒ§ãƒ³ 4=>ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
         $class = 'Tracker_field_'.$field[2];
         if( ! class_exists($class) )
-        { // ¥Ç¥Õ¥©¥ë¥È
+        { // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
             $class = 'Tracker_field_text';
             $field[2] = 'text';
             $field[3] = '20';
@@ -390,7 +390,7 @@ function plugin_tracker_plus_get_fields($base,$refer,&$config)
 
 
 ///////////////////////////////////////////////////////////////////////////
-// °ìÍ÷É½¼¨
+// ä¸€è¦§è¡¨ç¤º
 function plugin_tracker_plus_list_convert()
 {
     global $vars;
@@ -502,7 +502,7 @@ function plugin_tracker_plus_getlist($page, $refer, $config_name, $list_name, $o
 
         if( ! $filter_config->read() && $list->filter_name != NULL )
         {
-                // filter¤ÎÀßÄê¤¬¤Ê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ, ¥¨¥é¡¼¥í¥°¤òÊÖ¤¹
+                // filterã®è¨­å®šãŒãªã•ã‚Œã¦ã„ãªã‘ã‚Œã°, ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°ã‚’è¿”ã™
                 return "<p>config file '".htmlspecialchars($config->page.'/filters')."' not found</p>";
         }
 
@@ -583,22 +583,22 @@ class Tracker_plus_FilterConfig extends Config
 }
 
 
-// °ìÍ÷¥¯¥é¥¹
+// ä¸€è¦§ã‚¯ãƒ©ã‚¹
 class Tracker_plus_list extends Tracker_list
 {
     var $filter_name;
     var $dynamic_filter = TRACKER_PLUS_LIST_DYNAMIC_FILTER_DEFAULT;
     var $orefer;
     var $cache_level = array(
-               'NO'  => 0, // ¥­¥ã¥Ã¥·¥å¥í¥¸¥Ã¥¯¤òÍøÍÑ¤·¤Ê¤¤
-               'LV1' => 1, // ¥Ú¡¼¥¸¤ÎÆÉ¤ß¹ş¤ß½èÍı¤ËÂĞ¤¹¤ë¥­¥ã¥Ã¥·¥å¤òÍ­¸ú¤Ë¤¹¤ë
-               'LV2' => 2, // html¤ËÊÑ´¹¸å¤Î¥Ç¡¼¥¿¤Î¥­¥ã¥Ã¥·¥å¤òÍ­¸ú¤Ë¤¹¤ë
+               'NO'  => 0, // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ­ã‚¸ãƒƒã‚¯ã‚’åˆ©ç”¨ã—ãªã„
+               'LV1' => 1, // ãƒšãƒ¼ã‚¸ã®èª­ã¿è¾¼ã¿å‡¦ç†ã«å¯¾ã™ã‚‹ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æœ‰åŠ¹ã«ã™ã‚‹
+               'LV2' => 2, // htmlã«å¤‰æ›å¾Œã®ãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æœ‰åŠ¹ã«ã™ã‚‹
                );
 
     var $cache = array('level' => TRACKER_PLUS_LIST_CACHE_DEFAULT ,
-               'state' => array('stored_total' => 0,  // cache¤Ë¤¢¤ë¥Ç¡¼¥¿¿ô
-                        'hits' => 0,          // cacheÆâ¤Ë¤¢¤ëÍ­¸ú¤Ê¥Ç¡¼¥¿¿ô
-                        'total' => 0,         // ¹¹¿·Ê¬¤ò´Ş¤á¤ÆºÇ½ªÅª¤ËÍ­¸ú¤Ê¥Ç¡¼¥¿¿ô
+               'state' => array('stored_total' => 0,  // cacheã«ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿æ•°
+                        'hits' => 0,          // cacheå†…ã«ã‚ã‚‹æœ‰åŠ¹ãªãƒ‡ãƒ¼ã‚¿æ•°
+                        'total' => 0,         // æ›´æ–°åˆ†ã‚’å«ã‚ã¦æœ€çµ‚çš„ã«æœ‰åŠ¹ãªãƒ‡ãƒ¼ã‚¿æ•°
                         'cnvrt' => FALSE), 
                'verbs' => FALSE,
                );
@@ -629,20 +629,20 @@ class Tracker_plus_list extends Tracker_list
         
         $pattern = join('',plugin_tracker_plus_get_source($config->page.'/page'));
         
-        // "/page"¤ÎÆâÍÆ¤¬Ä¹¤¹¤®¤ë¤Èpreg_match()¤¬¼ºÇÔ¤¹¤ë¥Ğ¥°(?)¤¬¤¢¤ë¤Î¤Ç
-        // "//////////"¤Ş¤Ç¤ò¥Ş¥Ã¥ÁÂĞ¾İ¤È¤µ¤»¤ë
-        // ( see http://dex.qp.land.to/pukiwiki.php, Top/Memo/Wiki¥á¥â)
+        // "/page"ã®å†…å®¹ãŒé•·ã™ãã‚‹ã¨preg_match()ãŒå¤±æ•—ã™ã‚‹ãƒã‚°(?)ãŒã‚ã‚‹ã®ã§
+        // "//////////"ã¾ã§ã‚’ãƒãƒƒãƒå¯¾è±¡ã¨ã•ã›ã‚‹
+        // ( see http://dex.qp.land.to/pukiwiki.php, Top/Memo/Wikiãƒ¡ãƒ¢)
         $pattern_endpos = strpos($pattern, "//////////");
         if( $pattern_endpos > 0 )
         {
             $pattern = substr($pattern, 0, $pattern_endpos);
         }
         
-        // ¥Ö¥í¥Ã¥¯¥×¥é¥°¥¤¥ó¤ò¥Õ¥£¡¼¥ë¥É¤ËÃÖ´¹
-        // #comment¤Ê¤É¤ÇÁ°¸å¤ËÊ¸»úÎó¤ÎÁı¸º¤¬¤¢¤Ã¤¿¾ì¹ç¤Ë¡¢[_block_xxx]¤ËµÛ¤¤¹ş¤Ş¤»¤ë¤è¤¦¤Ë¤¹¤ë
+        // ãƒ–ãƒ­ãƒƒã‚¯ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‚’ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ç½®æ›
+        // #commentãªã©ã§å‰å¾Œã«æ–‡å­—åˆ—ã®å¢—æ¸›ãŒã‚ã£ãŸå ´åˆã«ã€[_block_xxx]ã«å¸ã„è¾¼ã¾ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹
         $pattern = preg_replace('/^\#([^\(\s]+)(?:\((.*)\))?\s*$/m','[_block_$1]',$pattern);
 
-        // ¥Ñ¥¿¡¼¥ó¤òÀ¸À®
+        // ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
         $this->pattern = '';
         $this->pattern_fields = array();
         $pattern = preg_split('/\\\\\[(\w+)\\\\\]/',preg_quote($pattern,'/'),-1,PREG_SPLIT_DELIM_CAPTURE);
@@ -660,11 +660,11 @@ class Tracker_plus_list extends Tracker_list
         $this->cache['verbs'] = ($cache < 0) ? TRUE : FALSE;
         $this->cache['level'] = (abs($cache) <= $this->cache_level['LV2']) ? abs($cache) : $this->cache_level['NO']; 
 
-        // ¥Ú¡¼¥¸¤ÎÎóµó¤È¼è¤ê¹ş¤ß
+        // ãƒšãƒ¼ã‚¸ã®åˆ—æŒ™ã¨å–ã‚Šè¾¼ã¿
 
-        // cache ¤«¤é cacheºîÀ®»ş¹ï¤«¤é¥Ç¡¼¥¿¤ò¼è¤ê¹ş¤à
-        // $this->add()¤Ç¤Î½èÍı¤ÎÁ°¤Ë¤¢¤é¤«¤¸¤á cache ¤«¤é¼è¤ê¹ş¤ó¤Ç¤ª¤¯¤³¤È¤Ç¡¢
-        // $this->add()¤ÎÌµ¸Â¥ë¡¼¥×ËÉ»ß¥í¥¸¥Ã¥¯¤òÍøÍÑ¤·¤Æ¡¢ÂĞ¾İ¥Ç¡¼¥¿¤ò´Ş¤à¥Ú¡¼¥¸¤ÎÆÉ¤ß¹ş¤ß¤ò¹Ô¤ï¤»¤Ê¤¤¡£
+        // cache ã‹ã‚‰ cacheä½œæˆæ™‚åˆ»ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šè¾¼ã‚€
+        // $this->add()ã§ã®å‡¦ç†ã®å‰ã«ã‚ã‚‰ã‹ã˜ã‚ cache ã‹ã‚‰å–ã‚Šè¾¼ã‚“ã§ãŠãã“ã¨ã§ã€
+        // $this->add()ã®ç„¡é™ãƒ«ãƒ¼ãƒ—é˜²æ­¢ãƒ­ã‚¸ãƒƒã‚¯ã‚’åˆ©ç”¨ã—ã¦ã€å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒšãƒ¼ã‚¸ã®èª­ã¿è¾¼ã¿ã‚’è¡Œã‚ã›ãªã„ã€‚
         $this->get_cache_rows();
 
         $pattern = "$page/";
@@ -690,7 +690,7 @@ class Tracker_plus_list extends Tracker_list
 	{
 		static $moved = array();
 
-		// Ìµ¸Â¥ë¡¼¥×ËÉ»ß
+		// ç„¡é™ãƒ«ãƒ¼ãƒ—é˜²æ­¢
 		if (array_key_exists($name,$this->rows))
 		{
 			return;
@@ -709,8 +709,8 @@ class Tracker_plus_list extends Tracker_list
 		}
 		$source = join('',preg_replace('/^(\*{1,3}.*)\[#[A-Za-z][\w-]+\](.*)$/','$1$2',$source));
 
-        // "/page"¤ÎÆâÍÆ¤¬Ä¹¤¹¤®¤ë¤Èpreg_match()¤¬¼ºÇÔ¤¹¤ë¥Ğ¥°(?)¤¬¤¢¤ë¤Î¤Ç
-        // "//////////"¤Ş¤Ç¤ò¥Ş¥Ã¥ÁÂĞ¾İ¤È¤µ¤»¤ë
+        // "/page"ã®å†…å®¹ãŒé•·ã™ãã‚‹ã¨preg_match()ãŒå¤±æ•—ã™ã‚‹ãƒã‚°(?)ãŒã‚ã‚‹ã®ã§
+        // "//////////"ã¾ã§ã‚’ãƒãƒƒãƒå¯¾è±¡ã¨ã•ã›ã‚‹
         if( TRACKER_PLUS_LIST_APPLY_LIMIT_PARSERANGE )
         {
             $source_endpos = strpos($source, "//////////");
@@ -720,7 +720,7 @@ class Tracker_plus_list extends Tracker_list
             }
         }
 
-		// ¥Ç¥Õ¥©¥ë¥ÈÃÍ
+		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
 		$this->rows[$name] = array(
 			'_page'  => "[[$page]]",
 			'_refer' => $this->page,
@@ -1383,7 +1383,7 @@ EOD;
             return ;
         }
 
-        // toString() ¤Î·ë²Ì¤ò¥­¥ã¥Ã¥·¥å¤È¤·¤Æ½ñ¤­½Ğ¤¹
+        // toString() ã®çµæœã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¨ã—ã¦æ›¸ãå‡ºã™
         $cachefile = $this->get_cnvtcache_filename(); 
 
         // If $filename exist, fopen() with 'w' mode destories file contents before acquiring flock() 
@@ -1730,7 +1730,7 @@ class Tracker_field_select2 extends Tracker_field_select
 {
     var $sort_type = SORT_NUMERIC;
   
-    //Tracker_field_select ¤Ë¤¢¤ëmultiple »ØÄê¤¬¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë¡£
+    //Tracker_field_select ã«ã‚ã‚‹multiple æŒ‡å®šãŒã§ããªã„ã‚ˆã†ã«ã™ã‚‹ã€‚
     function get_tag($empty=FALSE)
     {
         $s_name = htmlspecialchars($this->name);
@@ -1752,13 +1752,13 @@ class Tracker_field_select2 extends Tracker_field_select
         return $retval;
     }
   
-    // (sort¤ÎÅ¬ÍÑ»ş¤ËÍøÍÑ)
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // Â°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤µ¤ì¤¿¡¢¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹
+    // (sortã®é©ç”¨æ™‚ã«åˆ©ç”¨)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã•ã‚ŒãŸã€è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™
     function get_value($value)
     {
-        // config ¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ¤ÎÆÉ¤ß¼è¤ê¡¢
-        // ¤³¤ÎÂ°À­ÃÍ¤ËÂĞ¤·¤Æ»ØÄê½ç¤Ë¾º½ç¤Ë¿ô¤ò¿¶¤Ã¤¿ÇÛÎó¤òºîÀ®¤¹¤ë
+        // config ãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ã®èª­ã¿å–ã‚Šã€
+        // ã“ã®å±æ€§å€¤ã«å¯¾ã—ã¦æŒ‡å®šé †ã«æ˜‡é †ã«æ•°ã‚’æŒ¯ã£ãŸé…åˆ—ã‚’ä½œæˆã™ã‚‹
         static $options = array();
         if( ! array_key_exists($this->name,$options))
         { 
@@ -1768,8 +1768,8 @@ class Tracker_field_select2 extends Tracker_field_select
 
         $regmatch_value=$this->get_key($value);
 
-        // ³ºÅöÃÍ¤¬ config ¥Ú¡¼¥¸¤Ç»ØÄê¤µ¤ì¤¿ÃÍ¤Ç¤¢¤ì¤Ğ¡¢
-        // ¾åµ­¤Çµá¤á¤¿ÀßÄê½ç¤ò¼¨¤¹ÃÍ¤òÊÖ¤¹
+        // è©²å½“å€¤ãŒ config ãƒšãƒ¼ã‚¸ã§æŒ‡å®šã•ã‚ŒãŸå€¤ã§ã‚ã‚Œã°ã€
+        // ä¸Šè¨˜ã§æ±‚ã‚ãŸè¨­å®šé †ã‚’ç¤ºã™å€¤ã‚’è¿”ã™
         if( array_key_exists($regmatch_value,$options[$this->name]) ) 
         {
             return $options[$this->name][$regmatch_value];
@@ -1780,18 +1780,18 @@ class Tracker_field_select2 extends Tracker_field_select
         }
     }
   
-    // (style¤ÎÅ¬ÍÑ»ş¡¢listÉ½¼¨ÆâÍÆ¤Ë¡¢ÍøÍÑ¤µ¤ì¤ë)
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // ¤½¤Î¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹
+    // (styleã®é©ç”¨æ™‚ã€listè¡¨ç¤ºå†…å®¹ã«ã€åˆ©ç”¨ã•ã‚Œã‚‹)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // ãã®è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™
     function get_key($str)
     {
-        // ³ºÅö¥Õ¥£¡¼¥ë¥É¤ÎBlockPlugin¤ò°Ù¤¹Ê¸»úÎó¤«¤é0ÈÖÌÜ¤Î°ú¿ô¤Ë¤¢¤¿¤ëÊ¸»úÎó¤òÆÉ¤ß¼è¤ë
+        // è©²å½“ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®BlockPluginã‚’ç‚ºã™æ–‡å­—åˆ—ã‹ã‚‰0ç•ªç›®ã®å¼•æ•°ã«ã‚ãŸã‚‹æ–‡å­—åˆ—ã‚’èª­ã¿å–ã‚‹
         $arg= Tracker_plus_field_string_utility::get_argument_from_block_type_plugin_string($str);
         return $arg;
     }
   
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // ¤½¤Î¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹(tracker_listÉ½¼¨¤Ç¡¢ÍøÍÑ¤µ¤ì¤Æ¤¤¤ë)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // ãã®è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™(tracker_listè¡¨ç¤ºã§ã€åˆ©ç”¨ã•ã‚Œã¦ã„ã‚‹)
     function format_cell($str)
     {
         return $this->get_key($str);
@@ -1800,15 +1800,15 @@ class Tracker_field_select2 extends Tracker_field_select
 
 class Tracker_field_select3 extends Tracker_field_select2
 {
-    // (style¤ÎÅ¬ÍÑ»ş¡¢listÉ½¼¨ÆâÍÆ¤Ë¡¢ÍøÍÑ¤µ¤ì¤ë)
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // ¤½¤Î¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹
+    // (styleã®é©ç”¨æ™‚ã€listè¡¨ç¤ºå†…å®¹ã«ã€åˆ©ç”¨ã•ã‚Œã‚‹)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // ãã®è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™
     function get_key($str)
     {
-        // ³ºÅö¥Õ¥£¡¼¥ë¥É¤ÎBlockPlugin¤ò°Ù¤¹Ê¸»úÎó¤«¤é0ÈÖÌÜ¤Î°ú¿ô¤Ë¤¢¤¿¤ëÊ¸»úÎó¤òÆÉ¤ß¼è¤ë
+        // è©²å½“ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®BlockPluginã‚’ç‚ºã™æ–‡å­—åˆ—ã‹ã‚‰0ç•ªç›®ã®å¼•æ•°ã«ã‚ãŸã‚‹æ–‡å­—åˆ—ã‚’èª­ã¿å–ã‚‹
         $arg = Tracker_plus_field_string_utility::get_argument_from_block_type_plugin_string($str);
 
-        // config¥Ú¡¼¥¸¤ÇÀßÄê¤µ¤ì¤¿Â°À­ÃÍ¤ÈÈæ³Ó¤¹¤ë
+        // configãƒšãƒ¼ã‚¸ã§è¨­å®šã•ã‚ŒãŸå±æ€§å€¤ã¨æ¯”è¼ƒã™ã‚‹
         foreach( $this->config->get($this->name) as $option )
         {
             if( strcmp( $option[0], $arg) == 0 )
@@ -1833,39 +1833,39 @@ class Tracker_field_hidden2 extends Tracker_field_hidden
         $target_plugin_type = array_key_exists(2,$this->values) ?
           htmlspecialchars($this->values[2]) : 'block' ;
     
-        // ¥ª¥×¥·¥ç¥ó¤Î»ØÄê¤¬¤Ê¤±¤ì¤Ğ¡¢³ÈÄ¥½èÍı¤Ï¹Ô¤ï¤Ê¤¤
+        // ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®æŒ‡å®šãŒãªã‘ã‚Œã°ã€æ‹¡å¼µå‡¦ç†ã¯è¡Œã‚ãªã„
         if( $extract_arg_num == '' )
         {
           return $value;
         }
 
-        // »ØÄê¤µ¤ì¤¿¥×¥é¥°¥¤¥ó¤«¤é°ÌÃÖ¤Î°ú¿ô¤òÃê½Ğ¤¹¤ë
+        // æŒ‡å®šã•ã‚ŒãŸãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‹ã‚‰ä½ç½®ã®å¼•æ•°ã‚’æŠ½å‡ºã™ã‚‹
         $arg = Tracker_plus_field_string_Utility::get_argument_from_plugin_string(
                 $value, $extract_arg_num, $target_plugin_name, $target_plugin_type);
 
         return $arg;
     }
 
-    // (sort¤ÎÅ¬ÍÑ»ş¤Ë¡¢ÍøÍÑ¤µ¤ì¤Æ¤¤¤ë)
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤ËÂĞ¤·¤Æ¡¢config¥Ú¡¼¥¸¤Î¥ª¥×¥·¥ç¥ó»ØÄê¤Ë½¾¤Ã¤Æ¡¢
-    // ¥Ö¥í¥Ã¥¯·¿¤Î¥×¥é¥°¥¤¥ó°ú¿ô¤«¤é»ØÄê¤µ¤ì¤¿ÉôÊ¬¤ÎÊ¸»úÎó¤ò
-    // ÀÚ¤ê½Ğ¤·¤¿ÃÍ¤òÊÖ¤¹½èÍı¤ò´Ş¤à
+    // (sortã®é©ç”¨æ™‚ã«ã€åˆ©ç”¨ã•ã‚Œã¦ã„ã‚‹)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«å¯¾ã—ã¦ã€configãƒšãƒ¼ã‚¸ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®šã«å¾“ã£ã¦ã€
+    // ãƒ–ãƒ­ãƒƒã‚¯å‹ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³å¼•æ•°ã‹ã‚‰æŒ‡å®šã•ã‚ŒãŸéƒ¨åˆ†ã®æ–‡å­—åˆ—ã‚’
+    // åˆ‡ã‚Šå‡ºã—ãŸå€¤ã‚’è¿”ã™å‡¦ç†ã‚’å«ã‚€
     function get_value($value)
     {
         return $this->extract_value($value);
     }
       
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤ËÂĞ¤·¤Æ¡¢
-    // config¥Ú¡¼¥¸¤Î¥ª¥×¥·¥ç¥ó»ØÄê¤Ë½¾¤Ã¤ÆÀÚ¤ê½Ğ¤·¤¿ÃÍ¤òÊÖ¤·¡¢
-    // pageÆâ¤Î³ºÅöÉôÊ¬¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // ¤½¤Î¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹¡Êstyle¤ÎÅ¬ÍÑ»ş¤Ë¡¢ÍøÍÑ¤µ¤ì¤Æ¤¤¤ë¡Ë
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«å¯¾ã—ã¦ã€
+    // configãƒšãƒ¼ã‚¸ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®šã«å¾“ã£ã¦åˆ‡ã‚Šå‡ºã—ãŸå€¤ã‚’è¿”ã—ã€
+    // pageå†…ã®è©²å½“éƒ¨åˆ†ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // ãã®è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™ï¼ˆstyleã®é©ç”¨æ™‚ã«ã€åˆ©ç”¨ã•ã‚Œã¦ã„ã‚‹ï¼‰
     function get_key($str)
     {
-        // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤ËÂĞ¤·¤Æ¡¢config¥Ú¡¼¥¸¤Î¥ª¥×¥·¥ç¥ó»ØÄê¤Ë½¾¤Ã¤ÆÀÚ¤ê½Ğ¤¹¡£
+        // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«å¯¾ã—ã¦ã€configãƒšãƒ¼ã‚¸ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®šã«å¾“ã£ã¦åˆ‡ã‚Šå‡ºã™ã€‚
         $str= $this->extract_value($str);
         foreach( $this->config->get($this->name) as $option )
         {
-            // '/'Ê¸»ú¤¬ÁªÂò¸õÊäÊ¸»úÎó¤ËÆş¤Ã¤Æ¤â½èÍı¤Ç¤­¤ë¤è¤¦¤Ëescape¤¹¤ë
+            // '/'æ–‡å­—ãŒé¸æŠå€™è£œæ–‡å­—åˆ—ã«å…¥ã£ã¦ã‚‚å‡¦ç†ã§ãã‚‹ã‚ˆã†ã«escapeã™ã‚‹
             $eoption=preg_quote($option[0],'/');
             if( preg_match("/$eoption/",$str) )
             {
@@ -1875,14 +1875,14 @@ class Tracker_field_hidden2 extends Tracker_field_hidden
         return $str;
     }
   
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤ËÂĞ¤·¤Æ¡¢config¥Ú¡¼¥¸¤Î¥ª¥×¥·¥ç¥ó»ØÄê¤Ë½¾¤Ã¤ÆÀÚ¤ê½Ğ¤·¤¿ÃÍ¤òÊÖ¤·¡¢
-    // pageÆâ¤Î³ºÅöÉôÊ¬¤Ëconfig¥Ú¡¼¥¸¤ÎÂ°À­ÃÍ°ìÍ÷¤ÇÄêµÁ¤·¤¿Í×ÁÇ¤¬´Ş¤Ş¤ì¤ì¤Ğ¡¢
-    // ¤½¤Î¸«½Ğ¤·¤ÎÃÍ¤òÊÖ¤¹(tracker_listÉ½¼¨¤Ç¡¢ÍøÍÑ¤µ¤ì¤Æ¤¤¤ë)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«å¯¾ã—ã¦ã€configãƒšãƒ¼ã‚¸ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®šã«å¾“ã£ã¦åˆ‡ã‚Šå‡ºã—ãŸå€¤ã‚’è¿”ã—ã€
+    // pageå†…ã®è©²å½“éƒ¨åˆ†ã«configãƒšãƒ¼ã‚¸ã®å±æ€§å€¤ä¸€è¦§ã§å®šç¾©ã—ãŸè¦ç´ ãŒå«ã¾ã‚Œã‚Œã°ã€
+    // ãã®è¦‹å‡ºã—ã®å€¤ã‚’è¿”ã™(tracker_listè¡¨ç¤ºã§ã€åˆ©ç”¨ã•ã‚Œã¦ã„ã‚‹)
     function format_cell($str)
     {
         return $this->extract_value($str);
     }
-    // Page¤ØÅ¾µ­¤¹¤ëºİ¤ÎÃÍ¤òÊÖ¤¹
+    // Pageã¸è»¢è¨˜ã™ã‚‹éš›ã®å€¤ã‚’è¿”ã™
     function format_value($value,$post)
     {
         $str=$value;
@@ -1891,7 +1891,7 @@ class Tracker_field_hidden2 extends Tracker_field_hidden
         {
             if( preg_match("[$postkey]",$str) )
             {
-                // ÃÖ´¹¸õÊä¤¬ Array¤Ë¤Ê¤ë¾ì¹ç¤Ï¡¢ÇÛÎó¤«¤éÀèÆ¬Í×ÁÇ¤ò³ä¤êÅö¤Æ¤ë
+                // ç½®æ›å€™è£œãŒ Arrayã«ãªã‚‹å ´åˆã¯ã€é…åˆ—ã‹ã‚‰å…ˆé ­è¦ç´ ã‚’å‰²ã‚Šå½“ã¦ã‚‹
                 if( is_array($post[$postkey]) )
                 {
                   $str = str_replace("[$postkey]",array_shift($post[$postkey]),$str);
@@ -1908,10 +1908,10 @@ class Tracker_field_hidden2 extends Tracker_field_hidden
 class Tracker_field_hidden3 extends Tracker_field_hidden2
 {
     var $sort_type = SORT_NUMERIC;
-    // (sort¤ÎÅ¬ÍÑ»ş¤Ë¡¢ÍøÍÑ¤µ¤ì¤Æ¤¤¤ë)
-    // °ú¿ô(pageÆâ¤Î³ºÅöÉôÊ¬)¤ËÂĞ¤·¤Æ¡¢config¥Ú¡¼¥¸¤Î¥ª¥×¥·¥ç¥ó»ØÄê¤Ë½¾¤Ã¤Æ¡¢
-    // ¥Ö¥í¥Ã¥¯·¿¤Î¥×¥é¥°¥¤¥ó°ú¿ô¤«¤é»ØÄê¤µ¤ì¤¿ÉôÊ¬¤ÎÊ¸»úÎó¤ò
-    // ÀÚ¤ê½Ğ¤·¤¿ÃÍ¤òÊÖ¤¹½èÍı¤ò´Ş¤à
+    // (sortã®é©ç”¨æ™‚ã«ã€åˆ©ç”¨ã•ã‚Œã¦ã„ã‚‹)
+    // å¼•æ•°(pageå†…ã®è©²å½“éƒ¨åˆ†)ã«å¯¾ã—ã¦ã€configãƒšãƒ¼ã‚¸ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®šã«å¾“ã£ã¦ã€
+    // ãƒ–ãƒ­ãƒƒã‚¯å‹ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³å¼•æ•°ã‹ã‚‰æŒ‡å®šã•ã‚ŒãŸéƒ¨åˆ†ã®æ–‡å­—åˆ—ã‚’
+    // åˆ‡ã‚Šå‡ºã—ãŸå€¤ã‚’è¿”ã™å‡¦ç†ã‚’å«ã‚€
     function extract_value($value)
     {
         $extract_arg_num = (array_key_exists(0,$this->values) and is_numeric($this->values[0])) ?
@@ -1921,17 +1921,17 @@ class Tracker_field_hidden3 extends Tracker_field_hidden2
         $target_plugin_type = array_key_exists(2,$this->values) ?
           htmlspecialchars($this->values[2]) : 'block' ;
     
-        // ¥ª¥×¥·¥ç¥ó¤Î»ØÄê¤¬¤Ê¤±¤ì¤Ğ¡¢³ÈÄ¥½èÍı¤Ï¹Ô¤ï¤Ê¤¤
+        // ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®æŒ‡å®šãŒãªã‘ã‚Œã°ã€æ‹¡å¼µå‡¦ç†ã¯è¡Œã‚ãªã„
         if( $extract_arg_num == '' )
         {
           return $value;
         }
 
-        // »ØÄê¤µ¤ì¤¿¥×¥é¥°¥¤¥ó¤«¤é°ÌÃÖ¤Î°ú¿ô¤òÃê½Ğ¤¹¤ë
+        // æŒ‡å®šã•ã‚ŒãŸãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‹ã‚‰ä½ç½®ã®å¼•æ•°ã‚’æŠ½å‡ºã™ã‚‹
         $arg = Tracker_plus_field_string_Utility::get_argument_from_plugin_string(
                 $value, $extract_arg_num, $target_plugin_name, $target_plugin_type);
 
-        // Ãê½Ğ¤·¤¿Ê¸»úÎó¤«¤é¿ôÃÍ¤Ç¤¢¤ëÉôÊ¬¤Î¤ß¤òÃê½Ğ¤·¡¢¥½¡¼¥È¤äÉ½¼¨¤Î½èÍıÂĞ¾İ¤È¤¹¤ë
+        // æŠ½å‡ºã—ãŸæ–‡å­—åˆ—ã‹ã‚‰æ•°å€¤ã§ã‚ã‚‹éƒ¨åˆ†ã®ã¿ã‚’æŠ½å‡ºã—ã€ã‚½ãƒ¼ãƒˆã‚„è¡¨ç¤ºã®å‡¦ç†å¯¾è±¡ã¨ã™ã‚‹
         $arg = (preg_match("/(\d+)/",$arg,$match) ) ? $match[1] : 0;
 
         return $arg;
@@ -1981,12 +1981,12 @@ class Tracker_field_datefield extends Tracker_field
         $s_month = date("m",time()); 
         $s_date  = date("d",time()); 
         
-        // ¥Ç¥Õ¥©¥ë¥ÈÃÍ¤ò¸½ºß¤ÎÆüÉÕ¤Ë¤¹¤ë
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’ç¾åœ¨ã®æ—¥ä»˜ã«ã™ã‚‹
         if( $s_value=="TODAY" )
         {
           $s_value = $this->get_datestr_with_format($s_format, $s_year, $s_month, $s_date);
         }
-        // Javascript¤Ë°ú¤­¤ï¤¿¤¹·Á¼°¤Î¥Õ¥©¡¼¥Ş¥Ã¥ÈÊ¸»úÎó¤ËÊÑ¹¹¤¹¤ë
+        // Javascriptã«å¼•ãã‚ãŸã™å½¢å¼ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ–‡å­—åˆ—ã«å¤‰æ›´ã™ã‚‹
         $s_format = $this->form_format($s_format);
         
         return <<<EOD
@@ -1995,21 +1995,21 @@ class Tracker_field_datefield extends Tracker_field
 EOD;
     }
   
-    // sort¤ÎÅ¬ÍÑ»ş¤Ë¡¢¤½¤ÎÃÍ¤ò°Ê¤Ã¤Æ½èÍı¤ò¹Ô¤ï¤»¤ë¡£
-    // ³ºÅöÉôÊ¬¤Ë´Ş¤Ş¤ì¤ë¥Ö¥í¥Ã¥¯¥×¥é¥°¥¤¥ó¤Î0ÈÖÌÜ¤Î°ú¿ô¤òÊÖ¤¹
+    // sortã®é©ç”¨æ™‚ã«ã€ãã®å€¤ã‚’ä»¥ã£ã¦å‡¦ç†ã‚’è¡Œã‚ã›ã‚‹ã€‚
+    // è©²å½“éƒ¨åˆ†ã«å«ã¾ã‚Œã‚‹ãƒ–ãƒ­ãƒƒã‚¯ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®0ç•ªç›®ã®å¼•æ•°ã‚’è¿”ã™
     function get_value($value)
     {
         $arg= Tracker_plus_field_string_utility::get_argument_from_block_type_plugin_string($value,0,'datefield');
         return $arg;
     }
 
-    // tracker_listÉ½¼¨¤Ç¤Î¡¢½ĞÎÏÆâÍÆ¤òÊÖ¤¹
+    // tracker_listè¡¨ç¤ºã§ã®ã€å‡ºåŠ›å†…å®¹ã‚’è¿”ã™
     function format_cell($str)
     {
         return $this->get_value($str);
     }
   
-    // Page¤ØÅ¾µ­¤¹¤ëºİ¤ÎÃÍ¤òÊÖ¤¹
+    // Pageã¸è»¢è¨˜ã™ã‚‹éš›ã®å€¤ã‚’è¿”ã™
     function format_value($value)
     {
         $s_format = (array_key_exists(1,$this->values)) ? htmlspecialchars($this->values[1]) : 'YYYY-MM-DD';
@@ -2039,7 +2039,7 @@ EOD;
 
     function get_datestr_with_format($format_opt,$yyyy,$mm,$dd )
     {
-        // °ú¿ô¤Î·î¤ÎÃÍ¤ÎÈÏ°Ï month is 1 - 12
+        // å¼•æ•°ã®æœˆã®å€¤ã®ç¯„å›² month is 1 - 12
         $strWithFormat = $format_opt;
         $yy = $yyyy%100;
         
@@ -2062,7 +2062,7 @@ EOD;
         if( ! isset($pkwk_dtd) || $pkwk_dtd == PKWK_DTD_XHTML_1_1 )
             $pkwk_dtd = PKWK_DTD_XHTML_1_0_TRANSITIONAL;
         
-        // <head> ¥¿¥°Æâ¤Ø¤Î <meta>Àë¸À¤ÎÄÉ²Ã
+        // <head> ã‚¿ã‚°å†…ã¸ã® <meta>å®£è¨€ã®è¿½åŠ 
         $javascript = TRUE;
     }
 }
@@ -2083,7 +2083,7 @@ class Tracker_plus_field_string_utility {
         
         $matches = array();
 
-        // Ê£¿ô¤Îplugin»ØÄê¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ç¤âÁ´¤Æ¤ËÂĞ¤·¤ÆÃê½Ğ¤ò¹Ô¤¦
+        // è¤‡æ•°ã®pluginæŒ‡å®šãŒå­˜åœ¨ã™ã‚‹å ´åˆã§ã‚‚å…¨ã¦ã«å¯¾ã—ã¦æŠ½å‡ºã‚’è¡Œã†
         if( preg_match_all("/(?:$str_plugin\(([^\)]*)\))/", $str, $matches, PREG_SET_ORDER) )
         {
             $paddata = preg_split("/$str_plugin\([^\)]*\)/", $str);
@@ -2103,9 +2103,9 @@ class Tracker_plus_field_string_utility {
                     $extract_arg = $str_plugin . $str_arg;
                 }
             }
-            // block-type,inline-type ¤Î¥×¥é¥°¥¤¥ó»ØÄê¤Ë¤ª¤¤¤Æ¡¢
-            // ºÇ¸å¤Î³ç¸Ì¤Î¸å¤Ë¥»¥ß¥³¥í¥ó¤¬¤¢¤ë¾ì¹ç¤È¤Ê¤¤¾ì¹ç¤¬Â¸ºß¤¹¤ë¤¿¤á¡¢
-            // ¥»¥ß¥³¥í¥ó¤¬Ä¾¸å¤Ë¤¢¤Ã¤¿¾ì¹ç¤Ï¡¢¥×¥é¥°¥¤¥ó»ØÄê¤Î°ìÉô¤ÈÂª¤¨¤Æ½üµî¤ò¹Ô¤¦
+            // block-type,inline-type ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³æŒ‡å®šã«ãŠã„ã¦ã€
+            // æœ€å¾Œã®æ‹¬å¼§ã®å¾Œã«ã‚»ãƒŸã‚³ãƒ­ãƒ³ãŒã‚ã‚‹å ´åˆã¨ãªã„å ´åˆãŒå­˜åœ¨ã™ã‚‹ãŸã‚ã€
+            // ã‚»ãƒŸã‚³ãƒ­ãƒ³ãŒç›´å¾Œã«ã‚ã£ãŸå ´åˆã¯ã€ãƒ—ãƒ©ã‚°ã‚¤ãƒ³æŒ‡å®šã®ä¸€éƒ¨ã¨æ‰ãˆã¦é™¤å»ã‚’è¡Œã†
             if( preg_match("/^\;.*$/",$paddata[$i+1],$exrep) && count($exrep) > 1 )
             {
                 $paddata[$i+1] = $exrep[1];

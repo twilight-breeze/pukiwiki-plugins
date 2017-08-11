@@ -1,25 +1,25 @@
 <?php
 // $Id: memox.inc.php,v 0.7 2006/05/02 00:01:11 jjyun Exp $
 /**
- * PukiWiki •·•‚≥»ƒ••◊•È•∞•§•Û(memo eXtented plugin)
+ * PukiWiki „É°„É¢Êã°Âºµ„Éó„É©„Ç∞„Ç§„É≥(memo eXtented plugin)
  * (C) 2004, jjyun. http://www2.g-com.ne.jp/~jjyun/twilight-breeze/pukiwiki.php
  *
- * License: PukiWiki À‹¬Œ§»∆±§∏§Ø GNU General Public License (GPL) §«§π
+ * License: PukiWiki Êú¨‰Ωì„Å®Âêå„Åò„Åè GNU General Public License (GPL) „Åß„Åô
  * http://www.gnu.org/licenses/gpl.txt
  *
  * Description:
  *  #memox([column],[rows],[title],DELIM-STR,[contents])
  * 
- * §≥§Œ•≥°º•…§Œ¿‚Ã¿§œ°¢PukiWikiÀ‹¬Œ§À∆±∫≠§µ§Ï§∆§§§Î memo.inc.php,v 1.11 §À
- * •´•È•‡,π‘øÙ,ππø∑•‹•ø•Û§Œ•È•Ÿ•Î§Ú¿ﬂ√÷ª˛§À —ππ§«§≠§Î§Ë§¶Ω§¿µ§Ú≤√§®§ø§‚§Œ§«§π°£
+ * „Åì„ÅÆ„Ç≥„Éº„Éâ„ÅÆË™¨Êòé„ÅØ„ÄÅPukiWikiÊú¨‰Ωì„Å´ÂêåÊ¢±„Åï„Çå„Å¶„ÅÑ„Çã memo.inc.php,v 1.11 „Å´
+ * „Ç´„É©„É†,Ë°åÊï∞,Êõ¥Êñ∞„Éú„Çø„É≥„ÅÆ„É©„Éô„É´„ÇíË®≠ÁΩÆÊôÇ„Å´Â§âÊõ¥„Åß„Åç„Çã„Çà„ÅÜ‰øÆÊ≠£„ÇíÂä†„Åà„Åü„ÇÇ„ÅÆ„Åß„Åô„ÄÇ
  */
 
 /////////////////////////////////////////////////
-// •∆•≠•π•»•®•Í•¢§Œ•´•È•‡øÙ
+// „ÉÜ„Ç≠„Çπ„Éà„Ç®„É™„Ç¢„ÅÆ„Ç´„É©„É†Êï∞
 define('MEMOX_DEFAULT_COLS', 80);
-// •∆•≠•π•»•®•Í•¢§Œπ‘øÙ
+// „ÉÜ„Ç≠„Çπ„Éà„Ç®„É™„Ç¢„ÅÆË°åÊï∞
 define('MEMOX_DEFAULT_ROWS', 5);
-// •«•Í•ﬂ•ø(DELIM-STR)§Œ¿ﬂƒÍ
+// „Éá„É™„Éü„Çø(DELIM-STR)„ÅÆË®≠ÂÆö
 define('MEMOX_DELIM_STR',  '<DELIM>');
 
 /////////////////////////////////////////////////
@@ -39,7 +39,7 @@ function plugin_memox_init()
 function plugin_memox_init_ja()
 {
     $msg = array(
-                 '_btn_memox_update' => "ππø∑",
+                 '_btn_memox_update' => "Êõ¥Êñ∞",
                  );
     return $msg;
 }
@@ -80,7 +80,7 @@ function plugin_memox_action()
             continue;
         }
 
-        // •÷•Ì•√•Ø•◊•È•∞•§•Û§ŒæÏπÁ§œ°¢…Ω§Œ√Ê§ŒÕ¯Õ—§‚πÕŒ∏§π§Î§≥§»
+        // „Éñ„É≠„ÉÉ„ÇØ„Éó„É©„Ç∞„Ç§„É≥„ÅÆÂ†¥Âêà„ÅØ„ÄÅË°®„ÅÆ‰∏≠„ÅÆÂà©Áî®„ÇÇËÄÉÊÖÆ„Åô„Çã„Åì„Å®
         if(preg_match_all('/(?:#memox\(([^\)]*)\))/', $line,$matches, PREG_SET_ORDER))
         {
             $paddata = preg_split('/#memox\([^\)]*\)/', $line);
@@ -88,7 +88,7 @@ function plugin_memox_action()
             foreach($matches as $i => $match) 
             {
                 if ($vars['memox_no'] == $memox_no++ ) {
-                    // •ø°º•≤•√•»§Œ•◊•È•∞•§•Û…Ù ¨
+                    // „Çø„Éº„Ç≤„ÉÉ„Éà„ÅÆ„Éó„É©„Ç∞„Ç§„É≥ÈÉ®ÂàÜ
                     $opt = "$s_cols,$s_rows,$s_blabel";
                     $opt .= ",". MEMOX_DELIM_STR . ",$memo_body";
 
