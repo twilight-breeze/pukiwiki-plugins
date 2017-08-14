@@ -14,8 +14,8 @@
  */
 
 // ===================================================================
-// Layer Version ÍÑ¥³¡¼¥É
-// DOM= 0 or 1 ¤Ï¤³¤Î¥¹¥¯¥ê¥×¥È¤Ç¤ÏÂĞ±ş³°¤È¤·¤Ş¤¹¡£
+// Layer Version ç”¨ã‚³ãƒ¼ãƒ‰
+// DOM= 0 or 1 ã¯ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ã¯å¯¾å¿œå¤–ã¨ã—ã¾ã™ã€‚
 // Functions for CrossBrowser-----------------------------------------
 // DOM: 1=NN4, 2=IE4, 3=IE5+, 4=NN6+, 0=Others
 DOM = document.all ? 
@@ -26,13 +26,13 @@ DOM = document.all ?
 isMOZ  = navigator.userAgent.indexOf('Gecko')!=-1 ? true : false;
 
 // ===================================================================
-// === UI¥³¥ó¥È¥í¡¼¥ëÉôÊ¬(Å¬µ¹½¤Àµ¤·¤Æ¤¯¤À¤µ¤¤) =====================
-// ¥«¥ì¥ó¥À½Ğ¸½°ÌÃÖ¤Î»ØÄê (ÆşÎÏ¥Æ¥­¥¹¥ÈÉôÊ¬¤«¤é¤ÎOffset)
+// === UIã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«éƒ¨åˆ†(é©å®œä¿®æ­£ã—ã¦ãã ã•ã„) =====================
+// ã‚«ãƒ¬ãƒ³ãƒ€å‡ºç¾ä½ç½®ã®æŒ‡å®š (å…¥åŠ›ãƒ†ã‚­ã‚¹ãƒˆéƒ¨åˆ†ã‹ã‚‰ã®Offset)
 
 _plugin_datefield_dspCalendar.offsetX =  50;
 _plugin_datefield_dspCalendar.offsetY = -30;
 
-// ¥«¥ì¥ó¥À¤ÎÂç¤­¤µ¤Î»ØÄê 
+// ã‚«ãƒ¬ãƒ³ãƒ€ã®å¤§ãã•ã®æŒ‡å®š 
 
 _plugin_datefield_dspCalendar.width  = 160;
 _plugin_datefield_dspCalendar.height = 250;
@@ -71,9 +71,9 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 	/* -------------------------------------------------------------------------------- */
 
 	 /********************************************************************
-	 * ¸Æ¤Ó½Ğ¤·¸µ¤Î checkbox ¤Î¥Á¥§¥Ã¥¯¤ò³°¤¹.
+	 * å‘¼ã³å‡ºã—å…ƒã® checkbox ã®ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™.
 	 *  Syntax : _makeCalledCheckboxFalse()
-	 *  Îã     : _makeCalledCheckboxFalse()
+	 *  ä¾‹     : _makeCalledCheckboxFalse()
 	 * ------------------------------------------------------------------
 	 */
 	function _makeCalledCheckboxFalse()
@@ -83,42 +83,42 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 	}
 
 	/********************************************************************
-	 * ´Ê°×ÆşÎÏÍÑ¥¦¥¤¥ó¥É¥¦¤ÎºîÀ®
+	 * ç°¡æ˜“å…¥åŠ›ç”¨ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 	 *  Syntax : _plugin_datefield_mkSubWin(URL,winName,x,y,w,h)
-	 *  Îã     : _plugin_datefield_mkSubWin(winIndex,'test.htm','win0',100,200,150,300)
+	 *  ä¾‹     : _plugin_datefield_mkSubWin(winIndex,'test.htm','win0',100,200,150,300)
 	 * ------------------------------------------------------------------
 	 * from calendar.js Copyright(c)1999 Toshirou Takahashi tato@fureai.or.jp
 	 * Support http://www.fureai.or.jp/~tato/JS/BOOK/INDEX.HTM
 	 * 
-	 * ¾åµ­¤Î¥¹¥¯¥ê¥×¥È¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ëÆ±´Ø¿ô¤ò°ìÉô½¤Àµ¡£-- 2003/11/03 jjyun
+	 * ä¸Šè¨˜ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã«å«ã¾ã‚Œã¦ã„ã‚‹åŒé–¢æ•°ã‚’ä¸€éƒ¨ä¿®æ­£ã€‚-- 2003/11/03 jjyun
 	 * ------------------------------------------------------------------
 	 */
 	function _mkSubWin( URL, winName, x, y, w, h)
 	{
 	   	 var para = "" + 
-			" left="        + x  //[e4] ¥¦¥£¥ó¥É¥¦¤Î°ÌÃÖ(²èÌÌ¤Îº¸Ã¼¤«¤é¤Îµ÷Î¥)
- 			+ ",screenX="   + x  //[N4] left¤ÈÆ±¤¸¡£
-			+ ",top="       + y  //[e4] ¥¦¥£¥ó¥É¥¦¤Î°ÌÃÖ(²èÌÌ¤Î¾åÃ¼¤«¤é¤Îµ÷Î¥)
-			+ ",screenY="   + y  //[N4] top¤ÈÆ±¤¸¡£
-			+ ",height="    + h  //[e3/N2] ¥¦¥£¥ó¥É¥¦¤Î¹â¤µ.
-  			+ ",width="     + w  //[e3/N2] ¥¦¥£¥ó¥É¥¦¤Î²£Éı¡£
-			+ ",directories=no"  //[e3/N2] ¥æ¡¼¥¶ÀßÄê¥Ä¡¼¥ë¥Ğ¡¼¤ÎÉ½¼¨
-  			+ ",location=no"     //[e3/N2] ¾ì½ê¥Ä¡¼¥ë¥Ğ¡¼¤ÎÉ½¼¨
- 			+ ",menubar=no"      //[e3/N2] ¥á¥Ë¥å¡¼¥Ğ¡¼¤ÎÉ½¼¨
- 			+ ",resizable=yes"   //[e3/N2] ¥ê¥µ¥¤¥º¤ò²ÄÇ½¤Ë¤¹¤ë
-			+ ",status=no"       //[e3/N2] ¥¹¥Æ¡¼¥¿¥¹¥Ğ¡¼¤ÎÉ½¼¨
-			+ ",toolbar=no"      //[e3/N2] ¥Ä¡¼¥ë¥Ğ¡¼¤ÎÉ½¼¨
- 			+ ",scrollbars=no"   //[e3/N2] ¥¹¥¯¥í¡¼¥ë¥Ğ¡¼¤ÎÉ½¼¨
-  			+ ",dependent=yes";  //[N4] ¿Æ¥¦¥£¥ó¥É¥¦¤¬ÊÄ¤¸¤¿»ş¤Ë»Ò¥¦¥£¥ó¥É¥¦¤âÊÄ¤¸¤ë
+			" left="        + x  //[e4] ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®(ç”»é¢ã®å·¦ç«¯ã‹ã‚‰ã®è·é›¢)
+ 			+ ",screenX="   + x  //[N4] leftã¨åŒã˜ã€‚
+			+ ",top="       + y  //[e4] ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®(ç”»é¢ã®ä¸Šç«¯ã‹ã‚‰ã®è·é›¢)
+			+ ",screenY="   + y  //[N4] topã¨åŒã˜ã€‚
+			+ ",height="    + h  //[e3/N2] ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•.
+  			+ ",width="     + w  //[e3/N2] ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æ¨ªå¹…ã€‚
+			+ ",directories=no"  //[e3/N2] ãƒ¦ãƒ¼ã‚¶è¨­å®šãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã®è¡¨ç¤º
+  			+ ",location=no"     //[e3/N2] å ´æ‰€ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã®è¡¨ç¤º
+ 			+ ",menubar=no"      //[e3/N2] ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ã®è¡¨ç¤º
+ 			+ ",resizable=yes"   //[e3/N2] ãƒªã‚µã‚¤ã‚ºã‚’å¯èƒ½ã«ã™ã‚‹
+			+ ",status=no"       //[e3/N2] ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼ã®è¡¨ç¤º
+			+ ",toolbar=no"      //[e3/N2] ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã®è¡¨ç¤º
+ 			+ ",scrollbars=no"   //[e3/N2] ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼ã®è¡¨ç¤º
+  			+ ",dependent=yes";  //[N4] è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‰ã˜ãŸæ™‚ã«å­ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚‚é–‰ã˜ã‚‹
 
 		_plugin_datefield_dspCalendar.calendarWindow = window.open(URL,winName,para);
 		_plugin_datefield_dspCalendar.calendarWindow.focus();
 	}
 
 	/********************************************************************
-	 * »ØÄê·Á¼°¤Ë±è¤Ã¤¿ÆüÉÕÊ¸»úÎó¤ÎºîÀ®
+	 * æŒ‡å®šå½¢å¼ã«æ²¿ã£ãŸæ—¥ä»˜æ–‡å­—åˆ—ã®ä½œæˆ
 	 *  Syntax : _dateWithFormat(dateFormatType, wrtYYYY , wrtMM , wrtDD )
-	 *  Îã     : _dateWithFormat('YYYY/MM/DD', 2003 , 10 , 3 )
+	 *  ä¾‹     : _dateWithFormat('YYYY/MM/DD', 2003 , 10 , 3 )
 	 * ------------------------------------------------------------------
 	 */
 	function _dateWithFormat(dateFormatType, wrtYYYY, wrtMM, wrtDD)
@@ -138,9 +138,9 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 	}
 
 	 /********************************************************************
-	 * ¥«¥ì¥ó¥À¡¼¤ò¸Æ¤Ó½Ğ¤¹<input>¥Õ¥£¡¼¥ë¥ÉÊ¸»úÎó¤ÎºîÀ®
+	 * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’å‘¼ã³å‡ºã™<input>ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æ–‡å­—åˆ—ã®ä½œæˆ
 	 *  Syntax : _getCallCalendarScript(rObj, rThis, tags, diff)
-	 *  Îã     : _getCallCalendarScript(obj, this , "now" , -1 )
+	 *  ä¾‹     : _getCallCalendarScript(obj, this , "now" , -1 )
 	 * ------------------------------------------------------------------
 	 */
 	function _getCallCalendarScript(rObj,rThis, tags, diff){
@@ -196,7 +196,7 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 			break;
 		}
 		
-		//- ½µ¤ÎÀßÄê
+		//- é€±ã®è¨­å®š
 		this.week = new Array( 'Sn','Mn','Tu','Wd','Th','Fr','St' );
 		this.titleToday = 'Today :';
 
@@ -247,16 +247,16 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 
 	cldrHTML += '<tr class="datefield-month" > \n' + '<th colspan="7" align="center">\n';
 	
-	// Àè·î¤Ø¤Î¥Ü¥¿¥óÉ½¼¨
+	// å…ˆæœˆã¸ã®ãƒœã‚¿ãƒ³è¡¨ç¤º
 	cldrHTML += _getCallCalendarScript(obj,this,"&lt;&lt;", -1);
 	cldrHTML += titleDspMonth + '\n';
 	
-	// ¼¡·î¤Ø¤Î¥Ü¥¿¥óÉ½¼¨
+	// æ¬¡æœˆã¸ã®ãƒœã‚¿ãƒ³è¡¨ç¤º
 	cldrHTML += _getCallCalendarScript(obj,this,"&gt;&gt;", 1);
 
 	cldrHTML += ' </th>\n</tr>\n';
 	
-	// ¥«¥ì¥ó¥À¡¼¹½ÃÛÍÑHTML(Æ°ÅªÊÑ¹¹ÉôÊ¬) : Week
+	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æ§‹ç¯‰ç”¨HTML(å‹•çš„å¤‰æ›´éƒ¨åˆ†) : Week
 	cldrHTML += ' <tr> \n';
 	for (i=0;i<7;i++){
 	  cldrHTML += '    <td class="datefield-week" >';
@@ -264,8 +264,8 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 	}
 	cldrHTML += '  </tr>\n';
 	
-	// ¥«¥ì¥ó¥À¡¼¹½ÃÛÍÑHTML(Æ°ÅªÊÑ¹¹ÉôÊ¬) : Date
-	//  - É½¼¨·î¤Î¥«¥ì¥ó¥À¡¼¤ÎºÇ½é¤ÎÆüÍËÆü¤Ë¤¢¤¿¤ëÆüÉÕ¤Î¼èÆÀ
+	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æ§‹ç¯‰ç”¨HTML(å‹•çš„å¤‰æ›´éƒ¨åˆ†) : Date
+	//  - è¡¨ç¤ºæœˆã®ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®æœ€åˆã®æ—¥æ›œæ—¥ã«ã‚ãŸã‚‹æ—¥ä»˜ã®å–å¾—
 	cldrDate.setDate( -(cldrDate.getDay()-1) );
 	var wrtDate = new Date(cldrDate.getFullYear(),cldrDate.getMonth(),cldrDate.getDate());
 	
@@ -277,8 +277,8 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 
 		for( daycnt=0; daycnt < 7; daycnt++ )
 		{
-			// setTime ¤òÍÑ¤¤¤Æ´ğ½àÆü¤«¤é1ÆüÃ±°Ì¤Ë¤º¤é¤¹¡£
-			// SETTIME ¤Ç¼è°·¤¦Ã±°Ì¤Ï¥ß¥êÉÃÃ±°Ì(setDate()¤òº¹Ê¬¾ğÊó¤Ç¤Ï°·¤¨¤é¤ì¤Ê¤¤)
+			// setTime ã‚’ç”¨ã„ã¦åŸºæº–æ—¥ã‹ã‚‰1æ—¥å˜ä½ã«ãšã‚‰ã™ã€‚
+			// SETTIME ã§å–æ‰±ã†å˜ä½ã¯ãƒŸãƒªç§’å˜ä½(setDate()ã‚’å·®åˆ†æƒ…å ±ã§ã¯æ‰±ãˆã‚‰ã‚Œãªã„)
 			wrtDate.setTime(stdTime + (weekcnt*7 + daycnt) * (24*60*60*1000)); 
 			wrtDD   = wrtDate.getDate();
 			wrtMM   = wrtDate.getMonth();
@@ -320,7 +320,7 @@ function _plugin_datefield_dspCalendar(obj, event, dateFormatType, diffMonth, st
 		cldrHTML += '</tr>\n';
 	}
 	
-	// ¥«¥ì¥ó¥À¡¼¹½ÃÛÍÑHTML(¥Õ¥Ã¥¿ÉÕÍ¿)
+	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æ§‹ç¯‰ç”¨HTML(ãƒ•ãƒƒã‚¿ä»˜ä¸)
 	cldrHTML += _plugin_datefield_dspCalendar.footHTML;
 	
 	_plugin_datefield_dspCalendar.calendarWindow.document.charset="EUC-JP";

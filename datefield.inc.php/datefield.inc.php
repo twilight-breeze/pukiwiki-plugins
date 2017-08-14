@@ -5,28 +5,28 @@
 // $Id: datefield.inc.php,v 1.5 2006/03/23 21:10:25 jjyun Exp $
 //
 
-/* [³µÎ¬¤ÎÀâÌÀ]
- * ÆüÉÕÆşÎÏÊä½õ²èÌÌÉÕ¤­¥Õ¥£¡¼¥ë¥ÉÄó¶¡¥×¥é¥°¥¤¥ó 
+/* [æ¦‚ç•¥ã®èª¬æ˜]
+ * æ—¥ä»˜å…¥åŠ›è£œåŠ©ç”»é¢ä»˜ããƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æä¾›ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ 
  *    for pukiwiki-1.4.6
  *
- * ÆüÉÕÆşÎÏ¤ò¹Ô¤ï¤»¤¿¤¤¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤È¡¢
- * ÆüÉÕÆşÎÏ¤ò¹Ô¤¦¤¿¤á¤Î¥«¥ì¥ó¥À¡¼¤òÉ½¼¨¤¹¤ë¥Ü¥¿¥ó¤òÄó¶¡¤·¤Ş¤¹¡£
- * ¥«¥ì¥ó¥À¡¼¤Ë¤è¤ëÆüÉÕÆşÎÏ¤Ë¤è¤ê,³ºÅö¥Ú¡¼¥¸¤Î¹¹¿·¤¬¹Ô¤ï¤ì¤Ş¤¹¡£
- * ¥«¥ì¥ó¥À¡¼¤Ø¤Î°ú¿ô¤Ë¤Ï¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ø¤ÎÆşÎÏÃÍ
- * ÆüÉÕ½ñ¼°(¥Ç¥Õ¥©¥ë¥ÈÃÍ(¥Ö¥é¥ó¥¯²ÄÇ½),[ÆüÉÕ½ñ¼°ÀßÄê])
+ * æ—¥ä»˜å…¥åŠ›ã‚’è¡Œã‚ã›ãŸã„ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¨ã€
+ * æ—¥ä»˜å…¥åŠ›ã‚’è¡Œã†ãŸã‚ã®ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ãƒœã‚¿ãƒ³ã‚’æä¾›ã—ã¾ã™ã€‚
+ * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«ã‚ˆã‚‹æ—¥ä»˜å…¥åŠ›ã«ã‚ˆã‚Š,è©²å½“ãƒšãƒ¼ã‚¸ã®æ›´æ–°ãŒè¡Œã‚ã‚Œã¾ã™ã€‚
+ * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã¸ã®å¼•æ•°ã«ã¯ã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¸ã®å…¥åŠ›å€¤
+ * æ—¥ä»˜æ›¸å¼(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤(ãƒ–ãƒ©ãƒ³ã‚¯å¯èƒ½),[æ—¥ä»˜æ›¸å¼è¨­å®š])
  * 
- * À©¸Â¡§JavaScript ¤ò»È¤Ã¤Æ¤¤¤ë¤Î¤¿¤á,
- * Javascript¤¬»ÈÍÑ¤Ç¤­¤ë´Ä¶­¤Ç¤Ê¤±¤ì¤ĞÆ°¤­¤Ş¤»¤ó¡£
+ * åˆ¶é™ï¼šJavaScript ã‚’ä½¿ã£ã¦ã„ã‚‹ã®ãŸã‚,
+ * JavascriptãŒä½¿ç”¨ã§ãã‚‹ç’°å¢ƒã§ãªã‘ã‚Œã°å‹•ãã¾ã›ã‚“ã€‚
  * 
- * ¥Ö¥é¥¦¥¶Â¦¤ÎÀßÄê¤ÎÂ¾¤Ë¡¢¥µ¡¼¥ĞÂ¦¤ÎÀßÄê¤È¤·¤Æ
- * pukiwiki.ini.php ¤Î PKWK_ALLOW_JAVASCRIPT ¤ò°Ê²¼¤ÎÀßÄê¤Ë¤¹¤ëÉ¬Í×¤¬¤¢¤ê¤Ş¤¹
+ * ãƒ–ãƒ©ã‚¦ã‚¶å´ã®è¨­å®šã®ä»–ã«ã€ã‚µãƒ¼ãƒå´ã®è¨­å®šã¨ã—ã¦
+ * pukiwiki.ini.php ã® PKWK_ALLOW_JAVASCRIPT ã‚’ä»¥ä¸‹ã®è¨­å®šã«ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™
  *   define('PKWK_ALLOW_JAVASCRIPT', 1);     // 0 or 1
  */ 
 
-// ½¤Àµ¸å¤Î¥ê¥í¡¼¥É»ş¤Ë¡¢ÊÔ½¸²Õ½ê¤ØÉ½¼¨²Õ½ê¤ò°Ü¤¹
-// Í­¸ú¤Ë¤¹¤ë¾ì¹ç¤Ë¤Ï¡¢TRUE , Ìµ¸ú¤Ë¤¹¤ë¾ì¹ç¤Ë¤Ï FALSE ¤ò»ØÄê
+// ä¿®æ­£å¾Œã®ãƒªãƒ­ãƒ¼ãƒ‰æ™‚ã«ã€ç·¨é›†ç®‡æ‰€ã¸è¡¨ç¤ºç®‡æ‰€ã‚’ç§»ã™
+// æœ‰åŠ¹ã«ã™ã‚‹å ´åˆã«ã¯ã€TRUE , ç„¡åŠ¹ã«ã™ã‚‹å ´åˆã«ã¯ FALSE ã‚’æŒ‡å®š
 define('DATEFIELD_JUMP_TO_MODIFIED_PLACE',FALSE); // TRUE or FALSE
-// ¥â¡¼¥ÉÊÑ¹¹¤òÅ¬ÍÑ¤¹¤ë
+// ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚’é©ç”¨ã™ã‚‹
 define('DATEFIELD_APPLY_MODECHANGE',TRUE); // TRUE or FALSE
 
 function plugin_datefield_init()
@@ -53,18 +53,18 @@ function plugin_datefield_init_ja()
 {
 	$msg = array(
 		'_datefield_msg' => array(
-			'format_not_effective'        => "ÆüÉÕ½ñ¼°Ê¸»úÎó %s ¤Ë¥¯¥©¡¼¥ÈÊ¸»ú(&nbsp;&#039;&nbsp;&quot;&nbsp;)¤ò»ÈÍÑ¤·¤Ê¤¤¤Ç¤¯¤À¤µ¤¤¡£" ,
-			'input_pattern_not_effective' =>  "ÆşÎÏÃÍ¤¬ÆüÉÕ½ñ¼° %s ¤È¹çÃ×¤·¤Ş¤»¤ó¡£<br />"
-												+ "¥¼¥í¥Ñ¥Ç¥£¥ó¥°¤â¹ÍÎ¸¤·¤Æ¤¯¤À¤µ¤¤¡£",
-			'datecheck_irregular_error' => "ÆüÉÕ³ÎÇ§»ş¤ÎÁÛÄê³°¥¨¥é¡¼¤Ç¤¹¡£<br />" 
-												+ "³ÎÇ§ÂĞ¾İÊ¸»úÎó: %s <br />"
-												+ "ÆüÉÕ½ñ¼°Ê¸»úÎó: %s <br />"
-												+ "°ú¼õÊÑ¿ôÊ¸»úÎó: %s <br />"
-												+ "¥Ñ¡¼¥¹½ñ¼°¾õÂÖ: %s <br />"
-												+ "ÆÉ¤ß¼è¤ê¾õÂÖ:year = %s, month = %s, day = %s<br />",
-			'datecheck_not_effective_month' => "·î¤Î»ØÄê %s ¤¬ÄÌ¾ï¼è¤êÆÀ¤ëÃÍ¤«¤é³°¤ì¤Æ¤¤¤Ş¤¹¡£", 
-			'datecheck_not_effective_day'   => "ÆüÉÕ¤Î»ØÄê %s ¤¬ÄÌ¾ï¼è¤êÆÀ¤ëÃÍ¤«¤é³°¤ì¤Æ¤¤¤Ş¤¹¡£", 
-			'datecheck_not_effective_date'  => "ÆşÎÏÆüÉÕ %s ¤¬ÉÔÅ¬ÀÚ¤Ç¤¹¡£",
+			'format_not_effective'        => "æ—¥ä»˜æ›¸å¼æ–‡å­—åˆ— %s ã«ã‚¯ã‚©ãƒ¼ãƒˆæ–‡å­—(&nbsp;&#039;&nbsp;&quot;&nbsp;)ã‚’ä½¿ç”¨ã—ãªã„ã§ãã ã•ã„ã€‚" ,
+			'input_pattern_not_effective' =>  "å…¥åŠ›å€¤ãŒæ—¥ä»˜æ›¸å¼ %s ã¨åˆè‡´ã—ã¾ã›ã‚“ã€‚<br />"
+												+ "ã‚¼ãƒ­ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã‚‚è€ƒæ…®ã—ã¦ãã ã•ã„ã€‚",
+			'datecheck_irregular_error' => "æ—¥ä»˜ç¢ºèªæ™‚ã®æƒ³å®šå¤–ã‚¨ãƒ©ãƒ¼ã§ã™ã€‚<br />" 
+												+ "ç¢ºèªå¯¾è±¡æ–‡å­—åˆ—: %s <br />"
+												+ "æ—¥ä»˜æ›¸å¼æ–‡å­—åˆ—: %s <br />"
+												+ "å¼•å—å¤‰æ•°æ–‡å­—åˆ—: %s <br />"
+												+ "ãƒ‘ãƒ¼ã‚¹æ›¸å¼çŠ¶æ…‹: %s <br />"
+												+ "èª­ã¿å–ã‚ŠçŠ¶æ…‹:year = %s, month = %s, day = %s<br />",
+			'datecheck_not_effective_month' => "æœˆã®æŒ‡å®š %s ãŒé€šå¸¸å–ã‚Šå¾—ã‚‹å€¤ã‹ã‚‰å¤–ã‚Œã¦ã„ã¾ã™ã€‚", 
+			'datecheck_not_effective_day'   => "æ—¥ä»˜ã®æŒ‡å®š %s ãŒé€šå¸¸å–ã‚Šå¾—ã‚‹å€¤ã‹ã‚‰å¤–ã‚Œã¦ã„ã¾ã™ã€‚", 
+			'datecheck_not_effective_date'  => "å…¥åŠ›æ—¥ä»˜ %s ãŒä¸é©åˆ‡ã§ã™ã€‚",
 			)
 		);
 	return $msg;
@@ -114,7 +114,7 @@ function plugin_datefield_action() {
 				$opt = $match[1];
 				if ($vars['number'] == $number++)
 				{
-					//¥¿¡¼¥²¥Ã¥È¤Î¥×¥é¥°¥¤¥óÉôÊ¬
+					//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³éƒ¨åˆ†
 					$para_array = preg_split('/,/',$opt);
 					$errmsg = plugin_datefield_chkFormat($vars['infield'],$para_array[1]);
 					if( strlen($errmsg) > 0 )
@@ -140,8 +140,8 @@ function plugin_datefield_action() {
 }
 
 /* * function plugin_datefield_chkFormat($chkedStr, $formatStr) 
- * ÆüÉÕ(³ÎÇ§ÂĞ¾İ)Ê¸»úÎó¤ÈÆüÉÕ½ñ¼°Ê¸»úÎó¤Î³ÎÇ§¤ò¹Ô¤¦
- * ÌäÂê¤¬¤Ê¤±¤ì¤Ğ¶õÊ¸»úÎó¤ò¡¢ÉÔ¶ñ¹ç¤¬¤¢¤ì¤Ğ¤½¤ÎÆâÍÆ¤ò¼¨¤¹Ê¸»úÎó¤òÊÖ¤¹
+ * æ—¥ä»˜(ç¢ºèªå¯¾è±¡)æ–‡å­—åˆ—ã¨æ—¥ä»˜æ›¸å¼æ–‡å­—åˆ—ã®ç¢ºèªã‚’è¡Œã†
+ * å•é¡ŒãŒãªã‘ã‚Œã°ç©ºæ–‡å­—åˆ—ã‚’ã€ä¸å…·åˆãŒã‚ã‚Œã°ãã®å†…å®¹ã‚’ç¤ºã™æ–‡å­—åˆ—ã‚’è¿”ã™
  */
 function plugin_datefield_chkFormat($chkedStr, $formatStr)
 {
@@ -153,14 +153,14 @@ function plugin_datefield_chkFormat($chkedStr, $formatStr)
 	if( strlen($formatStr) == 0) $formatStr='YYYY/MM/DD';
 	$formatReg = $formatStr;
 
-	/* ¥¯¥©¡¼¥ÈÊ¸»ú ¤ÎÂ¸ºß³ÎÇ§ */
+	/* ã‚¯ã‚©ãƒ¼ãƒˆæ–‡å­— ã®å­˜åœ¨ç¢ºèª */
 	if(preg_match('/^.*[\'\"].*$/',$formatReg) ) /* match character..." ' */ 
 	{ 
 		$errmsg = sprintf($_datefield_msg['format_not_effective'], $formatStr);
 		return $errmsg;
 	}
 
-	/* ÆşÎÏÃÍ¤ÈÆüÉÕ½ñ¼°¤È¤ÎÈæ³Ó */
+	/* å…¥åŠ›å€¤ã¨æ—¥ä»˜æ›¸å¼ã¨ã®æ¯”è¼ƒ */
 	$formatReg = preg_replace('/\//','\\/',$formatReg);
 	$formatReg = '/^' . preg_replace('/[YMD]/i','\\d',$formatReg) .'$/';
 	if( ! preg_match($formatReg,$chkedStr) )
@@ -183,13 +183,13 @@ function plugin_datefield_chkFormat($chkedStr, $formatStr)
 	}
 	else if($month <= 0 or $month > 12)
 	{
-		/* ·î¤Î»ØÄê¤ÏÉ¬¿Ü */
+		/* æœˆã®æŒ‡å®šã¯å¿…é ˆ */
 		$errmsg = sprintf($_datefield_msg['datecheck_not_effective_month'], $chkedStr );
 		return $errmsg;
 	}
 	else
 	{
-		/* ·î»ØÄê¤¬¤¢¤ë¾õÂÖ */
+		/* æœˆæŒ‡å®šãŒã‚ã‚‹çŠ¶æ…‹ */
 		if( $day > 31)
 		{
 				$errmsg = sprintf($_datefield_msg['datecheck_not_effective_day'], $chkedStr );
@@ -197,7 +197,7 @@ function plugin_datefield_chkFormat($chkedStr, $formatStr)
 		}
 		else
 		{
-				/* »ØÄê¤¬¤Ê¤¤»ş¤Ï Êä´Ö¤¹¤ë */
+				/* æŒ‡å®šãŒãªã„æ™‚ã¯ è£œé–“ã™ã‚‹ */
 				if($year == -1) $year = date("Y",time());
 				if($day  == -1) $day  = 1;
 				if (! checkdate( $month, $day , $year) )
@@ -236,7 +236,7 @@ function plugin_datefield_getDate($dateStr, $formatStr)
 	$dateArgs =  preg_replace('/DD/i',',\$day',$dateArgs);
 	$dateArgs =  preg_replace('/[^(?!:,\$year|,\$month|,\$day)]+/','',$dateArgs);
 
-	// ¶èÀÚ¤êÊ¸»ú¤¬ '/'(¥Ğ¥Ã¥¯¥¹¥é¥Ã¥·¥å)¤Î¾ì¹ç¤Ï¥¨¥¹¥±¡¼¥×Ê¸»ú¤òÉÕÍ¿¤¹¤ë
+	// åŒºåˆ‡ã‚Šæ–‡å­—ãŒ '/'(ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥)ã®å ´åˆã¯ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—æ–‡å­—ã‚’ä»˜ä¸ã™ã‚‹
 	$scanStr = preg_replace('/\//','\\/',$dateStr);
 
 	if(! strcmp($scanStr,$formatPtn) == 0)
@@ -257,14 +257,14 @@ function plugin_datefield_getDate($dateStr, $formatStr)
 	return $date;
 }
 
-// headerÀë¸À¤ÎÃæ¤Ç°Ê²¼¤Î£²¤Ä¤ÎÄêµÁ¤ò¹Ô¤¦
-// ¡¦Javascipt¤òÍÑ¤¤¤ë¤³¤È¡¢
-// ¡¦XHTML1.0 Transitional Mode¤Ç¤ÎÆ°ºî¡Ê<form>¥¿¥°¤ËnameÂ°À­¤òÍÑ¤¤¤ë¡Ë
+// headerå®£è¨€ã®ä¸­ã§ä»¥ä¸‹ã®ï¼’ã¤ã®å®šç¾©ã‚’è¡Œã†
+// ãƒ»Javasciptã‚’ç”¨ã„ã‚‹ã“ã¨ã€
+// ãƒ»XHTML1.0 Transitional Modeã§ã®å‹•ä½œï¼ˆ<form>ã‚¿ã‚°ã«nameå±æ€§ã‚’ç”¨ã„ã‚‹ï¼‰
 function plugin_datefield_headDeclaration()
 {
 	global $pkwk_dtd, $javascript, $head_tags;
 
-	// Javascipt¤òÍÑ¤¤¤ë¤³¤È¡¢<form>¥¿¥°¤ËnameÂ°À­¤òÍÑ¤¤¤ë¤³¤È¤òÄÌÃÎ¤¹¤ë
+	// Javasciptã‚’ç”¨ã„ã‚‹ã“ã¨ã€<form>ã‚¿ã‚°ã«nameå±æ€§ã‚’ç”¨ã„ã‚‹ã“ã¨ã‚’é€šçŸ¥ã™ã‚‹
 	if( PKWK_ALLOW_JAVASCRIPT && DATEFIELD_APPLY_MODECHANGE )
 	{
 		// XHTML 1.0 Transitional
@@ -273,11 +273,11 @@ function plugin_datefield_headDeclaration()
 			$pkwk_dtd = PKWK_DTD_XHTML_1_0_TRANSITIONAL;
 		}
     
-		// <head> ¥¿¥°Æâ¤Ø¤Î <meta>Àë¸À¤ÎÄÉ²Ã
+		// <head> ã‚¿ã‚°å†…ã¸ã® <meta>å®£è¨€ã®è¿½åŠ 
 		$javascript = TRUE;
 	}
 
-	// <head> ¥¿¥°Æâ¤Ø¤Î <meta>Àë¸À¤ÎÄÉ²Ã
+	// <head> ã‚¿ã‚°å†…ã¸ã® <meta>å®£è¨€ã®è¿½åŠ 
 	$meta_str =
 		" <meta http-equiv=\"content-script-type\" content=\"text/javascript\" /> ";
 	if(! in_array($meta_str, $head_tags) )
@@ -289,10 +289,10 @@ function plugin_datefield_headDeclaration()
 
 function plugin_datefield_convert()
 {
-	// Javascipt¤òÍÑ¤¤¤ë¤³¤È¡¢<form>¥¿¥°¤ËnameÂ°À­¤òÍÑ¤¤¤ë¤³¤È¤òÄÌÃÎ¤¹¤ë
+	// Javasciptã‚’ç”¨ã„ã‚‹ã“ã¨ã€<form>ã‚¿ã‚°ã«nameå±æ€§ã‚’ç”¨ã„ã‚‹ã“ã¨ã‚’é€šçŸ¥ã™ã‚‹
 	plugin_datefield_headDeclaration();
   
-	// datefield ¥×¥é¥°¥¤¥ó¤ÎÉôÊ¬¤ÎHTML½ĞÎÏ
+	// datefield ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®éƒ¨åˆ†ã®HTMLå‡ºåŠ›
 	$number = plugin_datefield_getNumber();
 	if(func_num_args() > 0) 
     {
@@ -340,22 +340,22 @@ function plugin_datefield_getBody($number, $value, $format_opt, $caldsp_opt = ''
 	$page_enc = htmlspecialchars($vars['page']);
 	$script_enc = htmlspecialchars($script);
 	
-	// datefield ÍÑ¤Î<script>¥¿¥°¤ÎÁŞÆş
+	// datefield ç”¨ã®<script>ã‚¿ã‚°ã®æŒ¿å…¥
 	$extrascript = (PKWK_ALLOW_JAVASCRIPT && DATEFIELD_APPLY_MODECHANGE && $number == 0) ? plugin_datefield_getScript() : '';
 
-	// ÆüÉÕ½ñ¼°»ØÄêÊ¸»úÎó¤ËÂĞ¤¹¤ë½èÍı
+	// æ—¥ä»˜æ›¸å¼æŒ‡å®šæ–‡å­—åˆ—ã«å¯¾ã™ã‚‹å‡¦ç†
 	$format_opt= plugin_datefield_formFormat($format_opt);
 	
-	// ¥«¥ì¥ó¥À¡¼É½¼¨ÀßÄê¤ËÂĞ¤¹¤ë½èÍı
+	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼è¡¨ç¤ºè¨­å®šã«å¯¾ã™ã‚‹å‡¦ç†
 	if($caldsp_opt != 'CUR') $caldsp_opt = 'REL';
 
-	// ÊİÂ¸¤µ¤ì¤¿ÆüÉÕ¤«¤éÃÍ¤ò¼èÆÀ
+	// ä¿å­˜ã•ã‚ŒãŸæ—¥ä»˜ã‹ã‚‰å€¤ã‚’å–å¾—
 	$formatStr =substr($format_opt,1,strlen($format_opt)-2);
 	$errmsg = plugin_datefield_chkFormat($value,$formatStr);
 	if( strlen($value) != 0 && strlen($errmsg) == 0 and $caldsp_opt == 'REL')
 	{
 		$date= plugin_datefield_getDate($value, $formatStr);
-		/* »ØÄê¤¬¤Ê¤¤»ş¤Ï Êä´Ö¤¹¤ë */
+		/* æŒ‡å®šãŒãªã„æ™‚ã¯ è£œé–“ã™ã‚‹ */
 		if($date['year'] == -1) $date['year'] = date("Y",time());
 		if($date['day']  == -1) $date['day']  = 1;
 	}

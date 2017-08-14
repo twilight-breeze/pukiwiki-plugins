@@ -16,7 +16,7 @@
  * 
  */
 
-// ¥ê¥ó¥¯¤òÊÌÁë¤Ç³«¤¯.
+// ãƒªãƒ³ã‚¯ã‚’åˆ¥çª“ã§é–‹ã.
 define('LINKVOTE_OPEN_LINK_WITH_ANOTHER_WINDOW', false);
 
 function plugin_linkvote_init()
@@ -28,11 +28,11 @@ function plugin_linkvote_init()
 			'arg_nolabel'     => 'nolabel',
 			'arg_notitle'     => 'notitle',
 			'title_error' => 'Error in linkvote',
-			'no_page_error' => '$1 ¤Î¥Ú¡¼¥¸¤ÏÂ¸ºß¤·¤Ş¤»¤ó',
-			'update_failed' => 'ÅêÉ¼¼ºÇÔ¡§$1¤Ë¤ª¤¤¤ÆÅêÉ¼Àè¤¬Ìµ¤¤¤«¹àÌÜ¤¬¹çÃ×¤·¤Ş¤»¤ó¤Ç¤·¤¿¡£',
-			'body_error' => '¤¢¤ë¤Ù¤­°ú¿ô¤¬ÅÏ¤µ¤ì¤Æ¤¤¤Ê¤¤¤«¡¢°ú¿ô¤Ë¥¨¥é¡¼¤¬¤¢¤ê¤Ş¤¹¡£',
-			'msg_collided'  => '<h3>¤¢¤Ê¤¿¤¬ÅêÉ¼¤·¤Æ¤¤¤ë´Ö¤Ë¡¢Â¾¤Î¿Í¤¬Æ±¤¸¥Ú¡¼¥¸¤ÎÆâÍÆ¤ò¹¹¿·¤·¤Æ¤·¤Ş¤Ã¤¿¤è¤¦¤Ç¤¹¡£<br />½¾¤Ã¤Æ¡¢ÅêÉ¼¤¹¤ë°ÌÃÖ¤ò´Ö°ã¤¨¤ë²ÄÇ½À­¤¬¤¢¤ê¤Ş¤¹¡£<br /><br />
-¤¢¤Ê¤¿¤Î¹¹¿·¤òÌµ¸ú¤Ë¤·¤Ş¤·¤¿¡£Á°¤Î¥Ú¡¼¥¸¤ò¥ê¥í¡¼¥É¤·¤Æ¤ä¤êÄ¾¤·¤Æ¤¯¤À¤µ¤¤¡£</h3>'
+			'no_page_error' => '$1 ã®ãƒšãƒ¼ã‚¸ã¯å­˜åœ¨ã—ã¾ã›ã‚“',
+			'update_failed' => 'æŠ•ç¥¨å¤±æ•—ï¼š$1ã«ãŠã„ã¦æŠ•ç¥¨å…ˆãŒç„¡ã„ã‹é …ç›®ãŒåˆè‡´ã—ã¾ã›ã‚“ã§ã—ãŸã€‚',
+			'body_error' => 'ã‚ã‚‹ã¹ãå¼•æ•°ãŒæ¸¡ã•ã‚Œã¦ã„ãªã„ã‹ã€å¼•æ•°ã«ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚Šã¾ã™ã€‚',
+			'msg_collided'  => '<h3>ã‚ãªãŸãŒæŠ•ç¥¨ã—ã¦ã„ã‚‹é–“ã«ã€ä»–ã®äººãŒåŒã˜ãƒšãƒ¼ã‚¸ã®å†…å®¹ã‚’æ›´æ–°ã—ã¦ã—ã¾ã£ãŸã‚ˆã†ã§ã™ã€‚<br />å¾“ã£ã¦ã€æŠ•ç¥¨ã™ã‚‹ä½ç½®ã‚’é–“é•ãˆã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚<br /><br />
+ã‚ãªãŸã®æ›´æ–°ã‚’ç„¡åŠ¹ã«ã—ã¾ã—ãŸã€‚å‰ã®ãƒšãƒ¼ã‚¸ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦ã‚„ã‚Šç›´ã—ã¦ãã ã•ã„ã€‚</h3>'
 
 		),
 	);
@@ -96,7 +96,7 @@ function plugin_linkvote_inline()
 	$str_bunner = '';
 
 	$args = func_get_args();
-	array_pop($args); // {}Æâ¤ÎÍ×ÁÇ¤Îºï½ü
+	array_pop($args); // {}å†…ã®è¦ç´ ã®å‰Šé™¤
 	$page = $vars['page'];
 	if (!array_key_exists($page,$numbers))	$numbers[$page] = 0;
 	$vote_inno = $numbers[$page]++;
@@ -442,16 +442,16 @@ function plugin_linkvote_action_block($vote_no)
 // -- linkvote.inc.php --
 // Update Logs - Modified by jjyun. (2004/02/22 - 2004/12/10)
 //  v0.5 2006/04/02 modified by jjyun.
-//    ¥ê¥ó¥¯Àè¤òÊÌÁë¤ÇÉ½¼¨¤µ¤»¤ë¥Õ¥é¥°(LINKVOTE_OPEN_LINK_WITH_ANOTHER_WINDOW)¤òÄÉ²Ã.
+//    ãƒªãƒ³ã‚¯å…ˆã‚’åˆ¥çª“ã§è¡¨ç¤ºã•ã›ã‚‹ãƒ•ãƒ©ã‚°(LINKVOTE_OPEN_LINK_WITH_ANOTHER_WINDOW)ã‚’è¿½åŠ .
 //  v0.4 2004/12/10 modified by jjyun.
-//    ÆâÉô¥³¡¼¥É¤Î½¤Àµ(ÊÑ¹¹²Õ½ê plugin_linkvote_inline(), plugin_linkvote_address() )
+//    å†…éƒ¨ã‚³ãƒ¼ãƒ‰ã®ä¿®æ­£(å¤‰æ›´ç®‡æ‰€ plugin_linkvote_inline(), plugin_linkvote_address() )
 //  v0.3 2004/09/05 modified by jjyun.
-//    ¥ê¥ó¥¯Àè¤ÎÉ½µ­¤È¤·¤Æ²èÁü¥Õ¥¡¥¤¥ë¤ò»ØÄê¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+//    ãƒªãƒ³ã‚¯å…ˆã®è¡¨è¨˜ã¨ã—ã¦ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 //  v0.2 2004/08/13 modified by jjyun.
-//    ÆâÉô¥³¡¼¥É¤Î½¤Àµ($post,$get ¤òÍÑ¤¤¤Æ¤¤¤ëÉôÊ¬¤òºï½ü)
+//    å†…éƒ¨ã‚³ãƒ¼ãƒ‰ã®ä¿®æ­£($post,$get ã‚’ç”¨ã„ã¦ã„ã‚‹éƒ¨åˆ†ã‚’å‰Šé™¤)
 //  v0.1 2004/07/28 create by jjyun. based on vote2.inc.php, v 0.12 
 //
-// (vote2.inc.php ¤è¤ê)
+// (vote2.inc.php ã‚ˆã‚Š)
 //   vote2.inc.php, v 0.12 2003/10/05 17:55:04 sha 
 //   based on vote.inc.php v1.14
 //
